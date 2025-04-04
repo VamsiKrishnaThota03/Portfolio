@@ -127,7 +127,7 @@ function Footer() {
           <SocialMediaIcon href={Bio.insta} target="_blank"><InstagramIcon /></SocialMediaIcon>
         </SocialMediaIcons>
         <Copyright>
-          &copy; 2024 Vamsi Krishna. All rights reserved.
+          &copy; 2025 Vamsi Krishna. All rights reserved.
         </Copyright>
       </FooterWrapper>
     </FooterContainer>
