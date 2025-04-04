@@ -244,28 +244,6 @@ export const defaultImages = {
 
 export const projects = [
   {
-    id: 16,
-    title: "Ride-Sharing Platform",
-    date: "Feb 2024 - May 2024",
-    description:
-      "A comprehensive ride-sharing platform with three distinct user roles: Traveler, Traveler Companion, and Admin. Features include real-time ride sharing via WhatsApp/SMS with automatic link expiration, real-time location tracking with Leaflet.js, geofence notifications, and comprehensive audit trails. Built with React.js frontend and Node.js/Express backend, using PostgreSQL for data storage and WebSockets for real-time updates and tracking.",
-    image:
-      "/images/ride-sharing-platform.png",
-    tags: [
-      "React.js",
-      "Node.js",
-      "Express.js",
-      "PostgreSQL",
-      "WebSockets",
-      "Leaflet.js",
-      "JWT Authentication",
-      "Bootstrap"
-    ],
-    category: "web app",
-    github: "https://github.com/VamsiKrishnaThota03/Ride-Sharing-Platform",
-    webapp: "https://ride-sharing-platform-frontend.vercel.app/",
-  },
-  {
     id: 14,
     title: "IMF Gadget API",
     date: "Jan 2024 - Mar 2024",
@@ -366,6 +344,28 @@ export const projects = [
     category: "web app",
     github: "https://github.com/VamsiKrishnaThota03/task-management",
     webapp: "",
+  },
+  {
+    id: 16,
+    title: "Ride-Sharing Platform",
+    date: "Feb 2024 - Apr 2024",
+    description:
+      "A comprehensive ride-sharing platform with three distinct user roles: Traveler, Traveler Companion, and Admin. Features include real-time ride sharing via WhatsApp/SMS with automatic link expiration, real-time location tracking with Leaflet.js, geofence notifications, and comprehensive audit trails. Built with React.js frontend and Node.js/Express backend, using PostgreSQL for data storage and WebSockets for real-time updates and tracking.",
+    image:
+      "/images/ride-sharing-platform.png",
+    tags: [
+      "React.js",
+      "Node.js",
+      "Express.js",
+      "PostgreSQL",
+      "WebSockets",
+      "Leaflet.js",
+      "JWT Authentication",
+      "Bootstrap"
+    ],
+    category: "web app",
+    github: "https://github.com/VamsiKrishnaThota03/Ride-Sharing-Platform",
+    webapp: "https://ride-sharing-platform-frontend.vercel.app/",
   },
   {
     id: 13,
