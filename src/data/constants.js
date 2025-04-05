@@ -368,6 +368,28 @@ export const projects = [
     webapp: "https://ride-sharing-platform-frontend.vercel.app/",
   },
   {
+    id: 17,
+    title: "Multilingual FAQ System",
+    date: "Mar 2024 - Apr 2024",
+    description:
+      "A Django-based FAQ management system with multilingual support using the deep-translator API for automatic translations. Features include a WYSIWYG editor through django-ckeditor, Redis caching for optimized performance, and RESTful API endpoints that provide localized FAQ content in multiple languages including English, Hindi, and Bengali with simple language parameter switching.",
+    image:
+      "/images/faq-project.png",
+    tags: [
+      "Django",
+      "Django REST Framework",
+      "Redis",
+      "Python",
+      "Deep Translator API",
+      "Multilingual Support",
+      "CKEditor",
+      "API Development"
+    ],
+    category: "web app",
+    github: "https://github.com/VamsiKrishnaThota03/faq_project",
+    webapp: "",
+  },
+  {
     id: 13,
     title: "INotebook",
     date: "Aug 2023 - Oct 2023",
