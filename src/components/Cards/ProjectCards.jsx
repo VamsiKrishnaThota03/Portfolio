@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { defaultImages } from '../../data/constants';
 
@@ -138,26 +138,10 @@ const ProjectCards = ({project, setOpenModal}) => {
     
     const [imgSrc, setImgSrc] = useState(initialImage);
     
-    // Enhanced error handling for images
+    // Simple error handling for images
     const handleImageError = () => {
-        console.log(`Image failed to load: ${imgSrc}, using default instead`);
-        const defaultImg = getDefaultImage();
-        if (imgSrc !== defaultImg) {
-            setImgSrc(defaultImg);
-        }
+        setImgSrc(getDefaultImage());
     };
-    
-    // Check if image is an external URL and pre-load to test
-    useEffect(() => {
-        if (project.image && project.image.startsWith('http')) {
-            const img = new Image();
-            img.src = project.image;
-            img.onerror = () => {
-                handleImageError();
-            };
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [project.image]);
     
     return (
         <Card onClick={() => setOpenModal({state: true, project: {

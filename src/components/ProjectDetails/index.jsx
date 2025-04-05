@@ -211,26 +211,10 @@ const ProjectDetails = ({ openModal, setOpenModal }) => {
         setImgSrc(project?.image || getDefaultImage());
     }, [project]);
     
-    // Enhanced error handling for images
+    // Simple error handling for images
     const handleImageError = () => {
-        console.log(`Image failed to load in modal: ${imgSrc}, using default instead`);
-        const defaultImg = getDefaultImage();
-        if (imgSrc !== defaultImg) {
-            setImgSrc(defaultImg);
-        }
+        setImgSrc(getDefaultImage());
     };
-    
-    // Check if image is an external URL and pre-load to test
-    useEffect(() => {
-        if (project?.image && project.image.startsWith('http')) {
-            const img = new Image();
-            img.src = project.image;
-            img.onerror = () => {
-                handleImageError();
-            };
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [project?.image]);
     
     return (
         <Modal open={true} onClose={() => setOpenModal({ state: false, project: null })}>
