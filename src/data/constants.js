@@ -236,10 +236,13 @@ export const education = [
 
 // Default project images by category
 export const defaultImages = {
-  "web app": "https://cdn.dribbble.com/users/1626229/screenshots/15358191/media/5731138f1cf33d76d2be3515abbf0c8e.jpg",
-  "machine learning": "https://img.freepik.com/free-vector/machine-learning-concept-illustration_114360-3829.jpg",
+  "web app": "https://img.freepik.com/free-vector/website-development-banner_33099-1687.jpg",
+  "machine learning": "https://img.freepik.com/free-vector/artificial-intelligence-concept-landing-page_52683-24662.jpg",
   "mobile app": "https://img.freepik.com/free-vector/mobile-app-development-concept-illustration_114360-2120.jpg",
-  "default": "https://img.freepik.com/free-vector/programming-concept-illustration_114360-1351.jpg"
+  "api": "https://img.freepik.com/free-vector/secure-data-sharing-concept-illustration_114360-7730.jpg",
+  "backend": "https://img.freepik.com/free-vector/cloud-hosting-concept-illustration_114360-4957.jpg",
+  "fullstack": "https://img.freepik.com/free-vector/programmer-working-web-development-code-engineer-programming-python-php-java-script-computer_90220-249.jpg",
+  "default": "/images/default-project.jpg"
 };
 
 export const projects = [

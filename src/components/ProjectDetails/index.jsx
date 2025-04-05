@@ -68,10 +68,19 @@ const Desc = styled.div`
 
 const Image = styled.img`
     width: 100%;
+    height: 400px;
     object-fit: cover;
+    object-position: center;
     border-radius: 12px;
     margin-top: 30px;
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+    @media only screen and (max-width: 768px) {
+        height: 300px;
+    }
+    @media only screen and (max-width: 480px) {
+        height: 200px;
+    }
 `;
 
 const Label = styled.div`
@@ -202,9 +211,26 @@ const ProjectDetails = ({ openModal, setOpenModal }) => {
         setImgSrc(project?.image || getDefaultImage());
     }, [project]);
     
+    // Enhanced error handling for images
     const handleImageError = () => {
-        setImgSrc(getDefaultImage());
+        console.log(`Image failed to load in modal: ${imgSrc}, using default instead`);
+        const defaultImg = getDefaultImage();
+        if (imgSrc !== defaultImg) {
+            setImgSrc(defaultImg);
+        }
     };
+    
+    // Check if image is an external URL and pre-load to test
+    useEffect(() => {
+        if (project?.image && project.image.startsWith('http')) {
+            const img = new Image();
+            img.src = project.image;
+            img.onerror = () => {
+                handleImageError();
+            };
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [project?.image]);
     
     return (
         <Modal open={true} onClose={() => setOpenModal({ state: false, project: null })}>

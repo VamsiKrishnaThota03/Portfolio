@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { defaultImages } from '../../data/constants';
 
@@ -45,7 +45,9 @@ const Image = styled.img`
     background-color: ${({ theme }) => theme.white};
     border-radius: 10px;
     box-shadow: 0 0 16px 2px rgba(0,0,0,0.3);
-    object-fit: contain;
+    object-fit: cover;
+    object-position: center;
+    transition: all 0.3s ease;
 `
 
 const Tags = styled.div`
@@ -136,9 +138,26 @@ const ProjectCards = ({project, setOpenModal}) => {
     
     const [imgSrc, setImgSrc] = useState(initialImage);
     
+    // Enhanced error handling for images
     const handleImageError = () => {
-        setImgSrc(getDefaultImage());
+        console.log(`Image failed to load: ${imgSrc}, using default instead`);
+        const defaultImg = getDefaultImage();
+        if (imgSrc !== defaultImg) {
+            setImgSrc(defaultImg);
+        }
     };
+    
+    // Check if image is an external URL and pre-load to test
+    useEffect(() => {
+        if (project.image && project.image.startsWith('http')) {
+            const img = new Image();
+            img.src = project.image;
+            img.onerror = () => {
+                handleImageError();
+            };
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [project.image]);
     
     return (
         <Card onClick={() => setOpenModal({state: true, project: {
