@@ -14,7 +14,7 @@ export const Bio = {
     "Final-year Computer Science student at IIIT Jabalpur with professional experience in distributed systems and full-stack development. Engineered high-performance applications with React, Next.js, Express, and MongoDB, achieving significant performance improvements. Solved 1000+ algorithmic problems with competitive ratings on LeetCode and Codeforces. Passionate about building scalable software solutions that solve real-world problems with technical excellence.",
   github: "https://github.com/VamsiKrishnaThota03",
   resume:
-    "https://drive.google.com/file/d/1aYwtBDfE1bfpvGn1Qo6g3lBpG_NGlF8x/view?usp=sharing",
+    "https://drive.google.com/file/d/1AhLUWE9z0qZVz69j4S1-qCWQKsq6x_w9/view?usp=sharing",
   linkedin: "https://www.linkedin.com/in/thota-vamsi-krishna-a6b9b1264/",
   insta: "https://www.instagram.com/vamsi_royal03/",
 };
@@ -285,7 +285,7 @@ export const projects = [
     ],
     category: "web app",
     github: "https://github.com/VamsiKrishnaThota03/crypto-weather-nexus",
-    webapp: "https://crypto-weather-nexus-k6kpsw0f8-vamsi-krishnas-projects-242e8306.vercel.app/",
+    webapp: "https://crypto-weather-nexus-eta.vercel.app/",
   },
   {
     id: 12,
