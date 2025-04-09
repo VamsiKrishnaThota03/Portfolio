@@ -413,6 +413,25 @@ export const projects = [
     webapp: "",
   },
   {
+    id: 10,
+    title: "Blog Application",
+    date: "Mar 2024",
+    description:
+      "A full-stack blog application built with React, TypeScript, and Node.js. Features user authentication, CRUD operations for blog posts, responsive design with Tailwind CSS, and dark mode support. Deployed on Vercel (frontend) and Render (backend) with a PostgreSQL database on Neon.",
+    image: "https://img.freepik.com/free-vector/blogging-concept-illustration_114360-1038.jpg",
+    tags: [
+      "React",
+      "TypeScript",
+      "Node.js",
+      "PostgreSQL",
+      "Tailwind CSS",
+      "Express.js"
+    ],
+    category: "web app",
+    github: "https://github.com/VamsiKrishnaThota03/blog-app",
+    webapp: "https://blog-app-seven-ruddy.vercel.app/",
+  },
+  {
     id: 9,
     title: "Fusion - Institute ERP",
     date: "Jan 2024 - present",
