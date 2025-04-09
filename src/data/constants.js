@@ -413,7 +413,7 @@ export const projects = [
     webapp: "",
   },
   {
-    id: 10,
+    id: 18,
     title: "Blog Application",
     date: "Mar 2024",
     description:
