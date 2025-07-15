@@ -190,20 +190,20 @@ export const skills = [
 
 export const experiences = [
   {
-    id: 1,
-    role: "Software Development Engineer Intern",
-    company: "Komplai",
-    date: "Jun 2025 – Jun 2025",
-    location: "Bangalore, India",
-    desc: "End-to-End Feature Development: Developed and deployed full-stack features using Next.js, Prisma, Docker, and SQL, enhancing user experience and backend efficiency across compliance workflows. Company CIN Lookup Integration: Integrated IDfy API for real-time Company CIN validation, automating KYB checks and reducing onboarding time by 30%. Product Analytics with Amplitude: Implemented Amplitude event tracking across core user flows, enabling data-driven insights into user behavior and improving feature adoption rates.",
-  },
-  {
     id: 0,
     role: "Software Development Engineer Intern",
     company: "Troywings Technologies",
     date: "Jun 2023 – Dec 2023",
     location: "Bangalore, India",
     desc: "Distributed System Optimization: Enhanced multi-tiered microservices using intelligent caching and concurrent job queues, improving throughput by 30% (Node.js, Redis, NGINX). Secure Authentication Mechanisms: Engineered multi-factor authentication with cryptographic protocols, ensuring secure session validation under load (JWT, bcrypt). User Management at Scale: Designed and scaled a user session service to handle 1000+ concurrent users with 20% latency reduction, mirroring distributed authentication scenarios. API Reliability and Fault Tolerance: Engineered resilient APIs with built-in retry, degradation logic, and observability hooks, maintaining 99.9% uptime for storage services.",
+  },
+  {
+    id: 1,
+    role: "Software Development Engineer Intern",
+    company: "Komplai",
+    date: "Jun 2025 – Jun 2025",
+    location: "Bangalore, India",
+    desc: "End-to-End Feature Development: Developed and deployed full-stack features using Next.js, Prisma, Docker, and SQL, enhancing user experience and backend efficiency across compliance workflows. Company CIN Lookup Integration: Integrated IDfy API for real-time Company CIN validation, automating KYB checks and reducing onboarding time by 30%. Product Analytics with Amplitude: Implemented Amplitude event tracking across core user flows, enabling data-driven insights into user behavior and improving feature adoption rates.",
   },
   {
     id: 2,
@@ -229,7 +229,7 @@ export const education = [
     school: "Indian Institute of Information Technology, Jabalpur",
     date: "Dec 2021 - May 2025",
     grade: "8.5 CGPA",
-    desc: "Currently pursuing my Bachelor's degree in Computer Science and Engineering at IIIT Jabalpur, ranked among the top NITs in India. Completed coursework in Data Structures & Algorithms, Operating Systems, Distributed Systems, Computer Networks, Database Management, and System Design. Active member of the college's programming team and participated in multiple hackathons.",
+    desc: "Graduated with a Bachelor's degree in Computer Science and Engineering from IIIT Jabalpur, ranked among the top NITs in India. Completed coursework in Data Structures & Algorithms, Operating Systems, Distributed Systems, Computer Networks, Database Management, and System Design. Active member of the college's programming team and participated in multiple hackathons.",
     degree: "Bachelor of Technology - BTech, Computer Science and Engineering",
   },
   {
@@ -237,7 +237,7 @@ export const education = [
     school: "Narayana Junior College, Vijayawada",
     date: "June 2019 - March 2021",
     grade: "96.6%",
-    desc: "Completed my intermediate education with a focus on Mathematics, Physics, and Chemistry. Ranked in the top 5% of students statewide and qualified for JEE Advanced with a high percentile. Participated in various mathematics and science competitions, developing strong analytical and problem-solving skills.",
+    desc: "Completed intermediate education with a focus on Mathematics, Physics, and Chemistry. Ranked in the top 5% of students statewide and qualified for JEE Advanced with a high percentile. Participated in various mathematics and science competitions, developing strong analytical and problem-solving skills.",
     degree: "Higher Secondary Education (10+2)"
   },
   {
@@ -245,7 +245,7 @@ export const education = [
     school: "Ravindra Bharathi Group of Schools",
     date: "March 2019",
     grade: "10 CGPA",
-    desc: "Completed my secondary education with perfect 10 CGPA. Received multiple awards for academic excellence and participated in regional science exhibitions. Active in extracurricular activities including mathematics olympiads and coding competitions, which sparked my interest in computer science.",
+    desc: "Completed secondary education with perfect 10 CGPA. Received multiple awards for academic excellence and participated in regional science exhibitions. Active in extracurricular activities including mathematics olympiads and coding competitions, which sparked my interest in computer science.",
     degree: "Secondary School Education (Class X)"
   },
 ];
