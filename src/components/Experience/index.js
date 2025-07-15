@@ -81,7 +81,7 @@ const Experience = () => {
                 </Desc>
                 <TimelineSection>
                     <Timeline>
-                        {experiences.map((experience, idx) => (
+                        {[...experiences].reverse().map((experience, idx) => (
                             <TimelineItem key={`experience-${idx}`}>
                                 <TimelineSeparator>
                                     <TimelineDot variant="outlined" color="secondary" />

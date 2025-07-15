@@ -11,10 +11,10 @@ export const Bio = {
     "Problem Solver"
   ],
   description:
-    "Final-year Computer Science student at IIIT Jabalpur with professional experience in distributed systems and full-stack development. Engineered high-performance applications with React, Next.js, Express, and MongoDB, achieving significant performance improvements. Solved 1000+ algorithmic problems with competitive ratings on LeetCode and Codeforces. Passionate about building scalable software solutions that solve real-world problems with technical excellence.",
+    "Computer Science graduate from IIIT Jabalpur with professional experience in distributed systems and full-stack development. Engineered high-performance applications with React, Next.js, Express, and MongoDB, achieving significant performance improvements. Solved 1000+ algorithmic problems with competitive ratings on LeetCode and Codeforces. Passionate about building scalable software solutions that solve real-world problems with technical excellence.",
   github: "https://github.com/VamsiKrishnaThota03",
   resume:
-    "https://drive.google.com/file/d/1AhLUWE9z0qZVz69j4S1-qCWQKsq6x_w9/view?usp=sharing",
+    "https://drive.google.com/file/d/1JOigreKQaUg74gKdO76dNIMuiM6RnEJl/view?usp=drive_link",
   linkedin: "https://www.linkedin.com/in/thota-vamsi-krishna-a6b9b1264/",
   insta: "https://www.instagram.com/vamsi_royal03/",
 };
@@ -190,20 +190,36 @@ export const skills = [
 
 export const experiences = [
   {
+    id: 1,
+    role: "Software Development Engineer Intern",
+    company: "Komplai",
+    date: "Jun 2025 – Jun 2025",
+    location: "Bangalore, India",
+    desc: "End-to-End Feature Development: Developed and deployed full-stack features using Next.js, Prisma, Docker, and SQL, enhancing user experience and backend efficiency across compliance workflows. Company CIN Lookup Integration: Integrated IDfy API for real-time Company CIN validation, automating KYB checks and reducing onboarding time by 30%. Product Analytics with Amplitude: Implemented Amplitude event tracking across core user flows, enabling data-driven insights into user behavior and improving feature adoption rates.",
+  },
+  {
     id: 0,
-    role: "Software Engineer Intern",
+    role: "Software Development Engineer Intern",
     company: "Troywings Technologies",
-    date: "June 2023 - Dec 2023",
-    desc: "Engineered high-performance distributed systems under high load conditions, improving efficiency by 30%. Implemented secure multi-factor authentication using cryptographic protocols. Developed a scalable user management system supporting 1000+ concurrent users with 20% faster load times. Built fault-tolerant RESTful APIs that maintained stability during peak traffic.",
-    skills: [
-      "Distributed Systems",
-      "RESTful API Development",
-      "Authentication Security",
-      "Performance Optimization",
-      "High-Concurrency Systems",
-      "Full-Stack Development"
-    ],
-    // doc: {InternImage},
+    date: "Jun 2023 – Dec 2023",
+    location: "Bangalore, India",
+    desc: "Distributed System Optimization: Enhanced multi-tiered microservices using intelligent caching and concurrent job queues, improving throughput by 30% (Node.js, Redis, NGINX). Secure Authentication Mechanisms: Engineered multi-factor authentication with cryptographic protocols, ensuring secure session validation under load (JWT, bcrypt). User Management at Scale: Designed and scaled a user session service to handle 1000+ concurrent users with 20% latency reduction, mirroring distributed authentication scenarios. API Reliability and Fault Tolerance: Engineered resilient APIs with built-in retry, degradation logic, and observability hooks, maintaining 99.9% uptime for storage services.",
+  },
+  {
+    id: 2,
+    role: "Freelance Frontend Developer",
+    company: "Framewise.ai",
+    date: "May 2025 – Jun 2025",
+    location: "Remote",
+    desc: "Developed the complete frontend for framewise.ai, a platform for AI-powered interviews. Implemented seamless integration with Python backend APIs (provided via Swagger) using Next.js, and built user interfaces for interview workflows, authentication, and results. Delivered a fully functional, responsive web application connecting users to AI interview services.",
+  },
+  {
+    id: 3,
+    role: "SDE-1 (Contract)",
+    company: "Amazon (Alexa Daily Essentials, Alexa Craft Mobile Team)",
+    date: "Jul 2025 – Present",
+    location: "Bangalore, India",
+    desc: "Contributing to the Alexa Craft Mobile Team, focusing on feature development and code quality for Alexa’s daily essentials.",
   },
 ];
 
@@ -490,5 +506,44 @@ export const projects = [
     tags: ["Python", "Keras", "TensorFlow"],
     category: "machine learning",
     github: "https://github.com/VamsiKrishnaThota03/Plagarism-Checker",
+  },
+  {
+    id: 19,
+    title: "Movie Search App",
+    date: "Jul 2025",
+    description: "A beautiful and modern movie search application built with Next.js, TypeScript, and OMDB API. This app allows users to search for movies, view details, and rate their favorite films.",
+    image: "https://img.freepik.com/free-vector/movie-night-concept-illustration_114360-1197.jpg",
+    tags: [
+      "Next.js",
+      "TypeScript",
+      "Redux Toolkit",
+      "Tailwind CSS",
+      "shadcn/ui",
+      "React Query",
+      "OMDB API"
+    ],
+    category: "web app",
+    github: "https://github.com/VamsiKrishnaThota03/movie-imdb",
+    webapp: "https://movie-imdb-omega.vercel.app/movies",
+  },
+  {
+    id: 20,
+    title: "Job Management Admin Interface",
+    date: "Jul 2025",
+    description: "A full-stack application for managing job postings, built with Next.js, Mantine, and NestJS. Features job listing with advanced filters, create/edit/delete job postings, responsive design with Mantine UI, form validation with React Hook Form, and PostgreSQL database with TypeORM.",
+    image: "https://img.freepik.com/free-vector/job-interview-illustration_23-2148813982.jpg",
+    tags: [
+      "Next.js",
+      "TypeScript",
+      "Mantine UI",
+      "React Hook Form",
+      "NestJS",
+      "TypeORM",
+      "PostgreSQL",
+      "Class Validator"
+    ],
+    category: "web app",
+    github: "https://github.com/VamsiKrishnaThota03/job-management",
+    webapp: "https://job-management-orpin.vercel.app/",
   },
   ];
