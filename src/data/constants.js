@@ -215,11 +215,11 @@ export const experiences = [
   },
   {
     id: 3,
-    role: "SDE-1 (Contract)",
-    company: "Amazon (Alexa Daily Essentials, Alexa Craft Mobile Team)",
+    role: "Software Development Engineer I – Alexa Craft Mobile Team",
+    company: "Amazon",
     date: "Jul 2025 – Present",
-    location: "Bangalore, India",
-    desc: "Contributing to the Alexa Craft Mobile Team, focusing on feature development and code quality for Alexa’s daily essentials.",
+    location: "Chennai, India",
+    desc: "Monitoring & Reliability: Implemented CloudWatch monitors and alarms across Alexa’s Daily Essentials modules, improving service observability and reducing incident response time by 20%. Bug Fixes & Accessibility: Resolved production issues and accessibility bugs in Elements-Kitchen, Calendars, and Tasks pipelines, enhancing reliability for over 1M+ daily active Alexa users. Migration – DUB Exit Campaign: Enabled seamless Alexa Kitchen migration from DUB to ZAZ region by adding region flexibility and developing a new CDK package, ensuring zero downtime.",
   },
 ];
 
