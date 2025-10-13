@@ -14,7 +14,7 @@ export const Bio = {
     "Computer Science graduate from IIIT Jabalpur with professional experience in distributed systems and full-stack development. Engineered high-performance applications with React, Next.js, Express, and MongoDB, achieving significant performance improvements. Solved 1000+ algorithmic problems with competitive ratings on LeetCode and Codeforces. Passionate about building scalable software solutions that solve real-world problems with technical excellence.",
   github: "https://github.com/VamsiKrishnaThota03",
   resume:
-    "https://drive.google.com/file/d/1JOigreKQaUg74gKdO76dNIMuiM6RnEJl/view?usp=drive_link",
+    "https://drive.google.com/file/d/1wp0rP9MVhlnnDkQUKnBh_jKH4W_wX3Je/view?usp=sharing",
   linkedin: "https://www.linkedin.com/in/thota-vamsi-krishna-a6b9b1264/",
   insta: "https://www.instagram.com/vamsi_royal03/",
 };
