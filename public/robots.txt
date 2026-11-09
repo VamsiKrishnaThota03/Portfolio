@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://portfolio-beryl-nine-58.vercel.app/sitemap.xml
