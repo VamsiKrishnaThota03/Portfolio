@@ -15,27 +15,34 @@ Personal site of **Thota Vamsi Krishna**, incoming Software Engineer at Google (
 
 ## Features
 
-- **Interactive hero.** A canvas "constellation" field reacts to the cursor like a gravity well. The name animates in letter by letter, a rotating word cycles through what I build, the call-to-action buttons are magnetic, and a status pill shows *Incoming Software Engineer @ Google · ex-Amazon*.
-- **Command palette (⌘K / Ctrl+K).** Fuzzy search to jump to a section, open GitHub, LinkedIn, LeetCode or any project, copy the email address, toggle the theme, or download the résumé. It works fully from the keyboard.
-- **Terminal widget.** A small shell with `help`, `about`, `experience`, `projects`, `skills`, `education`, `contact`, `resume`, `goto <section>`, `theme` and `clear`. It keeps command history (↑/↓) and has Tab completion.
-- **Bento About section.** Photo and bio, next role, a live Bangalore clock, animated stat counters (8 marketplaces, ~90% faster investigations, 512 EC2 instances, 1000+ problems), education and achievements.
-- **Experience timeline.** The line fills as you scroll. Each role has tech chips and expandable highlights.
-- **Projects.** Filter chips (All / AI & Agents / Full-stack / Backend) with animated layout changes, 3D tilt and a cursor spotlight on the cards, and a detail modal with screenshot, description, stack, GitHub and live links, plus a click-to-load YouTube demo.
-- **Skills.** Two marquee rows plus grouped chip cards you can tap to highlight.
-- **Contact.** An EmailJS form with validation and status messages, a `mailto:` fallback and a copy-email button.
-- **Polish.** Light/dark theme (dark by default, saved in `localStorage`, no flash on load), a sticky glass navbar that highlights the active section, a scroll progress bar, and toasts.
+The site treats a backend engineer's career like a running system you can poke at.
 
-| Projects | Command palette | Terminal | Mobile |
+- **Hero "system map".** I sit at the centre as `vamsi.service`, with my stack (Java, Python, AWS, rules engines, data pipelines, AI agents, React/TS, datastores) orbiting as dependencies. Requests flow along the edges as glowing packets. You can hover or focus a node to see what it covers, or drag it and watch it spring back. Behind it, a cursor-reactive constellation canvas. The name animates in letter by letter, the role words rotate, the CTAs are magnetic, and a status pill reads *Incoming Software Engineer @ Google · ex-Amazon*.
+- **Career as a distributed trace.** Each role is a span on a 2023–2027 time axis. Google shows as a striped "incoming" span. Selecting a span opens its attributes, metrics (e.g. `marketplaces=8`, `ec2_instances=512`) and events. It's a keyboard-navigable tablist.
+- **Lab: incident replay.** A playable, fictional replay of the P0 investigator CLI. It walks five pipeline jobs, streams their outputs, isolates the failing job, types out an LLM root-cause summary and compares time to root cause (5–6 h by hand vs ~30 min).
+- **Fit finder.** A Drools-flavoured rules engine for recruiters. Toggle what the role needs and the matching rules "fire", each backed by real evidence from my work, then mail the match to me in one click.
+- **Skill field.** A hand-rolled force simulation: every skill is a bubble you can grab and fling. Bubbles collide, shy away from the cursor and re-cluster when you pick a group.
+- **Projects.** Live GitHub stats (public repos, language mix, latest pushes) from the public API. Filter chips (All / AI & Agents / Full-stack / Backend), tilt and spotlight cards, and a detail modal with screenshot, stack, links and a click-to-load YouTube demo.
+- **Command palette (⌘K / Ctrl+K).** Jump anywhere, run the incident replay, open links or projects, copy the email address, toggle the theme, or get the résumé.
+- **Terminal.** `help`, `about`, `experience`, `projects`, `skills`, `education`, `contact`, `resume`, `replay`, `fit`, `goto <section>`, `theme`, `clear`, with history and Tab completion.
+- **Bento About section** with photo, the next role, a live Bangalore clock and animated counters. **Contact** is an EmailJS form with a `mailto:` fallback and copy-email.
+- **Polish.** Light/dark theme, a glass navbar with active-section highlight, a desktop section rail, a scroll progress bar and toasts. There's also a hidden Konami-code easter egg (↑↑↓↓←→←→BA).
+
+| Career trace | Incident replay | Fit finder |
+| --- | --- | --- |
+| ![Career trace](docs/screenshots/career-trace.webp) | ![Incident replay](docs/screenshots/incident-replay.webp) | ![Fit finder](docs/screenshots/fit-finder.webp) |
+
+| Skill field | Projects | Command palette | Mobile |
 | --- | --- | --- | --- |
-| ![Projects](docs/screenshots/projects.webp) | ![Command palette](docs/screenshots/command-palette.webp) | ![Terminal](docs/screenshots/terminal.webp) | ![Mobile](docs/screenshots/mobile.webp) |
+| ![Skill field](docs/screenshots/skill-field.webp) | ![Projects](docs/screenshots/projects.webp) | ![Command palette](docs/screenshots/command-palette.webp) | ![Mobile](docs/screenshots/mobile.webp) |
 
 ## Quality
 
 - **Accessibility:** semantic landmarks, a skip link, visible focus rings, native `<dialog>` modals (focus containment, Esc to close, focus returned to the opener), an ARIA combobox/listbox for the palette, `aria-pressed` filters and `aria-expanded` disclosures, and alt text on every image.
-- **Reduced motion:** with `prefers-reduced-motion` the canvas draws one static frame, the marquee and rotating words stop, and reveal and tilt effects are turned off.
-- **Performance:** the canvas, command palette, terminal, project modal, EmailJS SDK and Framer Motion feature bundle are all code-split and lazy-loaded. Images are WebP with `srcset` and lazy loading. Fonts are self-hosted with `@fontsource-variable`. The canvas pauses when it is off-screen or the tab is hidden.
+- **Reduced motion:** with `prefers-reduced-motion` the canvases draw a static frame, the system map stops orbiting, the skill field settles once and stops, the rotating words stop, and reveal, tilt and confetti effects are turned off.
+- **Performance:** the canvas, command palette, terminal, incident replay, skill field, project modal, EmailJS SDK and Framer Motion feature bundle are all code-split and lazy-loaded. Images are WebP with `srcset` and lazy loading. Fonts are self-hosted with `@fontsource-variable`. The canvas pauses when it is off-screen or the tab is hidden.
 - **SEO:** title, meta description, canonical URL, Open Graph and Twitter card (`public/og-image.png`), JSON-LD `Person` data, favicon set, web manifest, `robots.txt` and `sitemap.xml`.
-- **Lighthouse** (local production preview): Desktop scores 100 for Performance, Accessibility, Best Practices and SEO. Mobile (simulated slow 4G) scores ~93 for Performance and 100 for the other three.
+- **Lighthouse** (local production preview): Desktop scores 100 for Performance, Accessibility, Best Practices and SEO. Mobile (simulated slow 4G) scores ~91 for Performance and 100 for the other three.
 
 ## Tech stack
 
@@ -52,8 +59,8 @@ Personal site of **Thota Vamsi Krishna**, incoming Software Engineer at Google (
 src/
   data/profile.ts        # all content: bio, experience, projects, skills, links
   config/site.ts         # EmailJS public IDs (overridable with VITE_* env vars)
-  sections/              # Hero, About, Experience, Projects, Skills, TerminalSection, Contact
-  components/            # Navbar, CommandPalette, Terminal, HeroCanvas, Dialog, ProjectModal, …
+  sections/              # Hero, About, Experience (trace), Lab, Projects, Skills, FitFinder, TerminalSection, Contact
+  components/            # SystemMap, IncidentReplay, SkillField, GitHubPulse, CommandPalette, Terminal, …
   hooks/                 # active section, media queries, pointer spotlight/tilt
   lib/                   # app context (theme, palette, toasts), helpers
 public/
