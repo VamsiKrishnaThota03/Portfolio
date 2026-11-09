@@ -1,6 +1,6 @@
 # Thota Vamsi Krishna · Portfolio
 
-Personal site of **Thota Vamsi Krishna**, Software Engineer at Amazon (Bangalore). It's a dark, interactive single-page portfolio built with Vite, React 18, TypeScript, Tailwind CSS and Framer Motion.
+Personal site of **Thota Vamsi Krishna**, incoming Software Engineer at Google (Nov 2026) and ex-Amazon, based in Bangalore. It's a dark, interactive single-page portfolio built with Vite, React 18, TypeScript, Tailwind CSS and Framer Motion.
 
 ![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)
 ![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black)
@@ -15,10 +15,10 @@ Personal site of **Thota Vamsi Krishna**, Software Engineer at Amazon (Bangalore
 
 ## Features
 
-- **Interactive hero.** A canvas "constellation" field reacts to the cursor like a gravity well. The name animates in letter by letter, a rotating word cycles through what I build, the call-to-action buttons are magnetic, and a status pill shows *currently: SDE @ Amazon*.
+- **Interactive hero.** A canvas "constellation" field reacts to the cursor like a gravity well. The name animates in letter by letter, a rotating word cycles through what I build, the call-to-action buttons are magnetic, and a status pill shows *Incoming Software Engineer @ Google · ex-Amazon*.
 - **Command palette (⌘K / Ctrl+K).** Fuzzy search to jump to a section, open GitHub, LinkedIn, LeetCode or any project, copy the email address, toggle the theme, or download the résumé. It works fully from the keyboard.
 - **Terminal widget.** A small shell with `help`, `about`, `experience`, `projects`, `skills`, `education`, `contact`, `resume`, `goto <section>`, `theme` and `clear`. It keeps command history (↑/↓) and has Tab completion.
-- **Bento About section.** Photo and bio, current role, a live Bangalore clock, animated stat counters (8 marketplaces, ~90% faster investigations, 512 EC2 instances, 1000+ problems), education and achievements.
+- **Bento About section.** Photo and bio, next role, a live Bangalore clock, animated stat counters (8 marketplaces, ~90% faster investigations, 512 EC2 instances, 1000+ problems), education and achievements.
 - **Experience timeline.** The line fills as you scroll. Each role has tech chips and expandable highlights.
 - **Projects.** Filter chips (All / AI & Agents / Full-stack / Backend) with animated layout changes, 3D tilt and a cursor spotlight on the cards, and a detail modal with screenshot, description, stack, GitHub and live links, plus a click-to-load YouTube demo.
 - **Skills.** Two marquee rows plus grouped chip cards you can tap to highlight.

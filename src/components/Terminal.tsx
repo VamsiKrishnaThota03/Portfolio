@@ -84,7 +84,9 @@ export default function Terminal() {
               <div key={e.company + e.start}>
                 <span className="text-accent">{e.start === e.end ? e.start : `${e.start} – ${e.end}`}</span>{'  '}
                 <b className="text-fg">{e.role}</b> @ {e.company}
-                {e.team ? ` (${e.team})` : ''}, {e.location}
+                {e.team ? ` (${e.team})` : ''}
+                {e.location ? `, ${e.location}` : ''}
+                {e.incoming ? ' (incoming)' : ''}
               </div>
             ))}
           </div>,

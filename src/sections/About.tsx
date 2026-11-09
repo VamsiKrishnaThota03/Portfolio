@@ -64,7 +64,7 @@ export function About() {
                 <p className="mt-3 leading-relaxed text-muted">{profile.summary}</p>
               </div>
               <p className="text-sm leading-relaxed text-subtle">
-                Day to day that means Java and Python services, Drools rules, SQL data pipelines and AWS (Lambda, CDK, SQS,
+                At Amazon that meant Java and Python services, Drools rules, SQL data pipelines and AWS (Lambda, CDK, SQS,
                 DynamoDB, Glue). Off the clock it means shipping AI agents and hackathon builds.
               </p>
             </div>
@@ -74,12 +74,12 @@ export function About() {
         <Tile className="col-span-2 sm:col-span-1" delay={0.05}>
           <div className="flex h-full flex-col justify-between gap-6">
             <div className="flex items-center justify-between text-muted">
-              <span className="font-mono text-xs uppercase tracking-widest">Now</span>
+              <span className="font-mono text-xs uppercase tracking-widest">Next · Nov 2026</span>
               <Briefcase size={18} aria-hidden="true" />
             </div>
             <div>
-              <p className="font-display text-2xl font-semibold">Amazon</p>
-              <p className="mt-1 text-sm text-muted">SDE · Seller Fees &amp; Incentives</p>
+              <p className="font-display text-2xl font-semibold">Google</p>
+              <p className="mt-1 text-sm text-muted">Incoming Software Engineer · ex-Amazon</p>
             </div>
           </div>
         </Tile>

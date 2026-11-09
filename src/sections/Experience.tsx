@@ -10,12 +10,15 @@ function period(e: Exp) {
   return e.start === e.end ? e.start : `${e.start} – ${e.end}`;
 }
 
+const hasDetails = (e: Exp) => e.highlights.length > 0;
+
 function Item({ e, index, defaultOpen }: { e: Exp; index: number; defaultOpen: boolean }) {
   const [open, setOpen] = useState(defaultOpen);
   const fx = usePointerFx<HTMLDivElement>();
   const panelId = useId();
   const reduce = useReducedMotion();
   const current = e.end === 'Present';
+  const details = hasDetails(e);
 
   return (
     <li className="relative pl-10 sm:pl-16">
@@ -37,21 +40,27 @@ function Item({ e, index, defaultOpen }: { e: Exp; index: number; defaultOpen: b
               <div>
                 <p className="font-mono text-xs tracking-wider text-accent uppercase">
                   {period(e)}
-                  {current && <span className="ml-2 rounded-full bg-accent/15 px-2 py-0.5 text-[10px] text-accent">Now</span>}
+                  {current && (
+                    <span className="ml-2 rounded-full bg-accent/15 px-2 py-0.5 text-[10px] text-accent">{e.incoming ? 'Incoming' : 'Now'}</span>
+                  )}
                 </p>
                 <h3 className="mt-2 font-display text-xl font-semibold tracking-tight sm:text-2xl">
                   {e.role} <span className="text-muted">·</span> {e.company}
                 </h3>
                 {e.team && <p className="mt-0.5 text-sm text-muted">{e.team}</p>}
               </div>
-              <p className="inline-flex items-center gap-1 text-sm text-subtle">
-                <MapPin size={14} aria-hidden="true" />
-                {e.location}
-              </p>
+              {e.location && (
+                <p className="inline-flex items-center gap-1 text-sm text-subtle">
+                  <MapPin size={14} aria-hidden="true" />
+                  {e.location}
+                </p>
+              )}
             </div>
 
-            <p className="mt-4 max-w-3xl leading-relaxed text-muted">{e.summary}</p>
+            {e.summary && <p className="mt-4 max-w-3xl leading-relaxed text-muted">{e.summary}</p>}
 
+            {details && (
+            <>
             <ul className="mt-4 flex flex-wrap gap-1.5" aria-label="Tech stack">
               {e.stack.map((s) => (
                 <li key={s} className="chip">
@@ -98,6 +107,8 @@ function Item({ e, index, defaultOpen }: { e: Exp; index: number; defaultOpen: b
                 </m.div>
               )}
             </AnimatePresence>
+            </>
+            )}
           </div>
         </div>
       </Reveal>
@@ -113,7 +124,7 @@ export function Experience() {
   return (
     <section id="experience" aria-labelledby="experience-title" className="relative mx-auto max-w-6xl px-5 py-20 sm:px-8 md:py-28">
       <SectionHeading id="experience" eyebrow="Experience" title={<>Where I’ve <span className="text-gradient">shipped</span>.</>}>
-        From microservice throughput to global launches. Expand any role for the details.
+        From microservice throughput to global launches, and next, Google. Expand any role for the details.
       </SectionHeading>
 
       <ol ref={ref} className="relative space-y-6">
@@ -124,7 +135,7 @@ export function Experience() {
           className="absolute top-2 bottom-2 left-[19px] w-px origin-top bg-gradient-to-b from-accent via-accent-2 to-accent-3 sm:left-[31px]"
         />
         {experience.map((e, i) => (
-          <Item key={`${e.company}-${e.start}`} e={e} index={i} defaultOpen={i === 0} />
+          <Item key={`${e.company}-${e.start}`} e={e} index={i} defaultOpen={e === experience.find(hasDetails)} />
         ))}
       </ol>
     </section>

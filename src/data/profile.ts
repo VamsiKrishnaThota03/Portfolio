@@ -7,16 +7,16 @@ export const profile = {
   name: 'Thota Vamsi Krishna',
   firstName: 'Vamsi',
   initials: 'VK',
-  headline: 'Software Engineer at Amazon',
+  headline: 'Incoming Software Engineer at Google',
   location: 'Bangalore, India',
   timezone: 'Asia/Kolkata',
   email: 'vamsikrishnathota483@gmail.com',
   resume: '/Thota_Vamsi_Krishna_Resume.pdf',
   photo: '/images/profile.webp',
   photoFallback: '/images/profile.jpg',
-  status: 'SDE @ Amazon',
+  status: 'Incoming Software Engineer @ Google · ex-Amazon',
   summary:
-    '1+ year building backend services, rules engines, data pipelines and AWS infrastructure. Delivered a global fee-incentive launch across 8 marketplaces and built tooling that cut P0 investigations by ~90%. I also build AI agents and developer tools.',
+    'Software Engineer joining Google (Nov 2026). Previously at Amazon, 1+ year building backend services, rules engines, data pipelines and AWS infrastructure. Delivered a global fee-incentive launch across 8 marketplaces; built tooling that cut P0 investigations by ~90%. I also build AI agents and developer tools.',
   roles: ['backend services', 'rules engines', 'data pipelines', 'AWS infrastructure', 'AI agents', 'developer tools'],
 } as const;
 
@@ -51,15 +51,28 @@ export type Experience = {
   summary: string;
   stack: string[];
   highlights: string[];
+  incoming?: boolean;
 };
 
 export const experience: Experience[] = [
+  {
+    // Incoming role: intentionally no details.
+    company: 'Google',
+    role: 'Software Engineer',
+    start: 'Nov 2026',
+    end: 'Present',
+    location: '',
+    summary: '',
+    stack: [],
+    highlights: [],
+    incoming: true,
+  },
   {
     company: 'Amazon',
     role: 'Software Development Engineer',
     team: 'Seller Fees & Incentives',
     start: 'Jan 2026',
-    end: 'Present',
+    end: 'Nov 2026',
     location: 'Bangalore',
     summary:
       'Fee-incentive programs for new sellers: event-driven discount platform, rules-based eligibility and the tooling that keeps it healthy.',

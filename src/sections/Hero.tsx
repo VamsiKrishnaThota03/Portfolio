@@ -103,7 +103,7 @@ export function Hero() {
               <span className="animate-pulse-ring absolute h-2.5 w-2.5 rounded-full bg-emerald-400" />
               <span className="h-2 w-2 rounded-full bg-emerald-400" />
             </span>
-            <span className="text-muted">currently:</span> {profile.status}
+            {profile.status}
           </span>
           <span className="inline-flex items-center gap-1.5 rounded-full px-2 py-1.5 text-xs text-muted sm:text-sm">
             <MapPin size={14} aria-hidden="true" /> {profile.location}
@@ -124,7 +124,7 @@ export function Hero() {
         </m.p>
 
         <p className="mt-4 max-w-xl text-sm leading-relaxed text-subtle sm:text-base">
-          Shipped a global fee-incentive launch across 8 marketplaces and tooling that cut P0 investigations by ~90%.
+          Previously at Amazon: shipped a global fee-incentive launch across 8 marketplaces and tooling that cut P0 investigations by ~90%.
         </p>
 
         <m.div {...fade(0.6)} className="mt-9 flex flex-wrap items-center gap-3">
