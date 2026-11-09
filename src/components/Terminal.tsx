@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
-import { education, experience, profile, projects, sections, skills, socials, achievement } from '../data/profile';
+import { achievement, allSections as sections, education, experience, profile, projects, skills, socials } from '../data/profile';
 import { useApp } from '../lib/app-context';
 import { copyText, scrollToId } from '../lib/utils';
 
@@ -16,6 +16,8 @@ const COMMANDS: Record<string, string> = {
   resume: 'download my résumé',
   socials: 'GitHub, LinkedIn, LeetCode',
   goto: 'goto <section>: scroll to a section',
+  replay: 'replay a P0 investigation',
+  fit: 'run the role-fit rules engine',
   theme: 'toggle light/dark theme',
   whoami: 'print the current user',
   clear: 'clear the screen',
@@ -160,6 +162,15 @@ export default function Terminal() {
         } else print(`usage: goto <${sections.map((s) => s.id).join('|')}>`, 'err');
         break;
       }
+      case 'replay':
+      case 'lab':
+        print('→ Opening the incident replay…');
+        scrollToId('lab');
+        break;
+      case 'fit':
+        print('→ Loading the rules engine…');
+        scrollToId('fit');
+        break;
       case 'theme':
         toggleTheme();
         print('Theme toggled.');

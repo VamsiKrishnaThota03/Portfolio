@@ -65,7 +65,7 @@ export function Navbar() {
           <span className="sr-only">, back to top</span>
         </a>
 
-        <ul className="hidden items-center gap-1 md:flex">
+        <ul className="hidden items-center gap-0.5 lg:flex">
           {sections.map((s) => (
             <li key={s.id}>
               <a
@@ -131,7 +131,7 @@ export function Navbar() {
           <button
             type="button"
             onClick={() => setOpen((o) => !o)}
-            className="grid h-9 w-9 place-items-center rounded-full border border-line bg-surface text-fg md:hidden"
+            className="grid h-9 w-9 place-items-center rounded-full border border-line bg-surface text-fg lg:hidden"
             aria-expanded={open}
             aria-controls="mobile-menu"
             aria-label={open ? 'Close menu' : 'Open menu'}
@@ -149,7 +149,7 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -8, scale: 0.98 }}
             transition={{ duration: 0.18 }}
-            className="glass mx-auto mt-2 w-[calc(100%-1.5rem)] max-w-6xl rounded-3xl border border-line p-2 shadow-2xl md:hidden"
+            className="glass mx-auto mt-2 w-[calc(100%-1.5rem)] max-w-6xl rounded-3xl border border-line p-2 shadow-2xl lg:hidden"
           >
             <ul>
               {sections.map((s, i) => (

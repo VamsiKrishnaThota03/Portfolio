@@ -1,6 +1,6 @@
-import { ArrowUpRight, Copy, CornerDownLeft, Download, FileText, Hash, Moon, Search, SquareTerminal, Sun } from 'lucide-react';
+import { ArrowUpRight, Copy, CornerDownLeft, Download, FileText, Hash, Moon, Play, Search, SquareTerminal, Sun } from 'lucide-react';
 import { useMemo, useRef, useState, type ReactNode } from 'react';
-import { profile, projects, sections, socials } from '../data/profile';
+import { allSections, profile, projects, socials } from '../data/profile';
 import { useApp } from '../lib/app-context';
 import { cn, copyText, scrollToId } from '../lib/utils';
 import { SocialIcon } from './BrandIcons';
@@ -34,9 +34,31 @@ export default function CommandPalette({ onClose }: { onClose: () => void }) {
   const actions = useMemo<Action[]>(() => {
     const open = (href: string) => () => window.open(href, '_blank', 'noopener,noreferrer');
     return [
-      { id: 'top', group: 'Navigate', label: 'Home', icon: <Hash size={16} />, run: () => scrollToId('top') },
-      ...sections.map<Action>((s) => ({ id: s.id, group: 'Navigate', label: s.label, icon: <Hash size={16} />, run: () => scrollToId(s.id) })),
-      { id: 'terminal', group: 'Navigate', label: 'Terminal', keywords: 'shell console cli', icon: <SquareTerminal size={16} />, run: () => scrollToId('terminal') },
+      ...allSections.map<Action>((s) => ({
+        id: s.id,
+        group: 'Navigate',
+        label: s.label,
+        keywords: s.id === 'terminal' ? 'shell console cli' : s.id === 'lab' ? 'p0 incident investigator demo' : s.id === 'fit' ? 'hire rules engine role match' : undefined,
+        icon: s.id === 'terminal' ? <SquareTerminal size={16} /> : <Hash size={16} />,
+        run: () => scrollToId(s.id),
+      })),
+      {
+        id: 'run-replay',
+        group: 'Actions',
+        label: 'Run the P0 incident replay',
+        keywords: 'demo investigator lab',
+        icon: <Play size={16} />,
+        run: () => {
+          scrollToId('lab');
+          // The replay is lazy-loaded; wait for its button to appear.
+          let tries = 0;
+          const t = window.setInterval(() => {
+            const b = document.querySelector<HTMLButtonElement>('[data-replay-run]');
+            if (b || ++tries > 30) window.clearInterval(t);
+            if (b && !b.disabled) b.click();
+          }, 150);
+        },
+      },
       {
         id: 'copy-email',
         group: 'Actions',

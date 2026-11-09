@@ -11,13 +11,35 @@ import { Hero } from './sections/Hero';
 import { Projects } from './sections/Projects';
 import { Skills } from './sections/Skills';
 import { TerminalSection } from './sections/TerminalSection';
+import { Lab } from './sections/Lab';
+import { FitFinder } from './sections/FitFinder';
+import { SectionRail } from './components/SectionRail';
+import { confetti } from './components/Confetti';
+
+const KONAMI = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
 
 const CommandPalette = lazy(() => import('./components/CommandPalette'));
 // Animation features are fetched as a separate chunk after first paint.
 const loadMotionFeatures = () => import('./lib/motion-features').then((r) => r.default);
 
 export default function App() {
-  const { paletteOpen, setPaletteOpen } = useApp();
+  const { paletteOpen, setPaletteOpen, toast } = useApp();
+
+  // Easter egg: the Konami code.
+  useEffect(() => {
+    let i = 0;
+    const onKey = (e: KeyboardEvent) => {
+      const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+      i = k === KONAMI[i] ? i + 1 : k === KONAMI[0] ? 1 : 0;
+      if (i === KONAMI.length) {
+        i = 0;
+        confetti();
+        toast('Cheat code accepted. You clearly read the source. Let’s talk!');
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [toast]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -48,12 +70,15 @@ export default function App() {
         Skip to content
       </a>
       <Navbar />
+      <SectionRail />
       <main id="main">
         <Hero />
         <About />
         <Experience />
+        <Lab />
         <Projects />
         <Skills />
+        <FitFinder />
         <TerminalSection />
         <Contact />
       </main>

@@ -52,6 +52,7 @@ export type Experience = {
   stack: string[];
   highlights: string[];
   incoming?: boolean;
+  metrics?: { k: string; v: string }[];
 };
 
 export const experience: Experience[] = [
@@ -71,6 +72,12 @@ export const experience: Experience[] = [
     company: 'Amazon',
     role: 'Software Development Engineer',
     team: 'Seller Fees & Incentives',
+    metrics: [
+      { k: 'marketplaces', v: '8' },
+      { k: 'p0_investigation', v: '5-6h → ~30m' },
+      { k: 'eligibility_configs', v: '45+' },
+      { k: 'benefits_cut_over', v: '5' },
+    ],
     start: 'Jan 2026',
     end: 'Nov 2026',
     location: 'Bangalore',
@@ -91,6 +98,12 @@ export const experience: Experience[] = [
     company: 'Amazon',
     role: 'Software Development Engineer',
     team: 'Alexa Mobile',
+    metrics: [
+      { k: 'ec2_instances', v: '512' },
+      { k: 'resources_replicated', v: '511' },
+      { k: 'apis_monitored', v: '24' },
+      { k: 'changes_shipped', v: '64' },
+    ],
     start: 'Jul 2025',
     end: 'Dec 2025',
     location: 'Chennai',
@@ -105,6 +118,7 @@ export const experience: Experience[] = [
   },
   {
     company: 'Komplai',
+    metrics: [{ k: 'onboarding_time', v: '−30%' }],
     role: 'SDE Intern',
     start: 'Jun 2025',
     end: 'Jun 2025',
@@ -118,6 +132,7 @@ export const experience: Experience[] = [
   },
   {
     company: 'Troywings Technologies',
+    metrics: [{ k: 'throughput', v: '+30%' }],
     role: 'SDE Intern',
     start: 'Jun 2023',
     end: 'Dec 2023',
@@ -401,7 +416,21 @@ export const skills: SkillGroup[] = [
 export const sections = [
   { id: 'about', label: 'About' },
   { id: 'experience', label: 'Experience' },
+  { id: 'lab', label: 'Lab' },
   { id: 'projects', label: 'Projects' },
   { id: 'skills', label: 'Skills' },
+  { id: 'contact', label: 'Contact' },
+] as const;
+
+/** Every scroll target, in page order (used by the section rail, palette and terminal). */
+export const allSections = [
+  { id: 'top', label: 'Home' },
+  { id: 'about', label: 'About' },
+  { id: 'experience', label: 'Experience' },
+  { id: 'lab', label: 'Incident replay' },
+  { id: 'projects', label: 'Projects' },
+  { id: 'skills', label: 'Skills' },
+  { id: 'fit', label: 'Fit finder' },
+  { id: 'terminal', label: 'Terminal' },
   { id: 'contact', label: 'Contact' },
 ] as const;

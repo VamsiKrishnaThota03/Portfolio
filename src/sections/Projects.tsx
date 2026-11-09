@@ -2,6 +2,7 @@ import { AnimatePresence, LayoutGroup, m, useReducedMotion } from 'framer-motion
 import { ArrowUpRight, Play } from 'lucide-react';
 import { lazy, Suspense, useMemo, useState } from 'react';
 import { GithubIcon } from '../components/BrandIcons';
+import { GitHubPulse } from '../components/GitHubPulse';
 import { ProjectCover } from '../components/ProjectCover';
 import { SectionHeading } from '../components/Reveal';
 import { projectFilters, projects, type Project, type ProjectCategory } from '../data/profile';
@@ -101,6 +102,8 @@ export function Projects() {
       <SectionHeading id="projects" eyebrow="Selected work" title={<>Things I’ve <span className="text-gradient">built</span>.</>}>
         Agents, full-stack apps and APIs. Open any card for screenshots, stack and links.
       </SectionHeading>
+
+      <GitHubPulse />
 
       <div role="group" aria-label="Filter projects" className="-mx-1 mb-8 flex gap-2 overflow-x-auto px-1 pb-1">
         <LayoutGroup id="project-filters">

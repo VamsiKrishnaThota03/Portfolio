@@ -1,6 +1,10 @@
-import { m, useReducedMotion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { Bot, Cloud, Code2, Database, Monitor, type LucideIcon } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { lazy, Suspense, useRef, useState } from 'react';
+import { GROUP_HUES } from '../components/skillHues';
+import { useInView } from '../hooks/useLazyInView';
+
+const SkillField = lazy(() => import('../components/SkillField'));
 import { Reveal, SectionHeading } from '../components/Reveal';
 import { skills } from '../data/profile';
 import { usePointerFx } from '../hooks/usePointerFx';
@@ -13,25 +17,6 @@ const icons: Record<string, LucideIcon> = {
   frontend: Monitor,
   ai: Bot,
 };
-
-function Marquee({ items, reverse, duration }: { items: string[]; reverse?: boolean; duration: number }) {
-  const reduce = useReducedMotion();
-  const row = [...items, ...items];
-  return (
-    <div className="relative overflow-hidden [mask-image:linear-gradient(to_right,transparent,#000_10%,#000_90%,transparent)]" aria-hidden="true">
-      <div
-        className={cn('flex w-max gap-3 py-1.5', !reduce && 'animate-marquee')}
-        style={{ ['--marquee-duration' as string]: `${duration}s`, animationDirection: reverse ? 'reverse' : 'normal' }}
-      >
-        {row.map((s, i) => (
-          <span key={i} className="rounded-xl border border-line bg-surface px-4 py-2 font-display text-base font-medium whitespace-nowrap text-muted sm:text-lg">
-            {s}
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
 
 function GroupCard({ g, active, onSelect, index }: { g: (typeof skills)[number]; active: boolean; onSelect: () => void; index: number }) {
   const fx = usePointerFx<HTMLDivElement>();
@@ -85,20 +70,61 @@ function GroupCard({ g, active, onSelect, index }: { g: (typeof skills)[number];
 
 export function Skills() {
   const [active, setActive] = useState<string | null>(null);
-  const all = useMemo(() => Array.from(new Set(skills.flatMap((g) => g.items))), []);
-  const half = Math.ceil(all.length / 2);
+  const fieldRef = useRef<HTMLDivElement>(null);
+  const showField = useInView(fieldRef, '400px');
 
   return (
     <section id="skills" aria-labelledby="skills-title" className="relative py-20 md:py-28">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <SectionHeading id="skills" eyebrow="Toolbox" title={<>The <span className="text-gradient">stack</span> I reach for.</>}>
-          Tap a group to highlight it. Most of my day is Java, Python and AWS; most of my weekends are TypeScript and agents.
+          Grab the bubbles, fling them, or pick a cluster. Most of my day is Java, Python and AWS; most of my weekends are TypeScript and agents.
         </SectionHeading>
       </div>
 
-      <div className="mb-12 space-y-3">
-        <Marquee items={all.slice(0, half)} duration={48} />
-        <Marquee items={all.slice(half)} duration={56} reverse />
+      <div className="mx-auto mb-12 max-w-6xl px-5 sm:px-8">
+        <Reveal>
+          <div className="card overflow-hidden">
+            <div className="flex flex-wrap items-center gap-2 border-b border-line bg-surface px-4 py-3 sm:px-5">
+              <span className="mr-1 font-mono text-[11px] text-subtle">cluster:</span>
+              <button
+                type="button"
+                aria-pressed={active === null}
+                onClick={() => setActive(null)}
+                className={cn(
+                  'h-8 rounded-full border px-3 text-xs font-medium transition-colors',
+                  active === null ? 'border-fg bg-fg text-bg' : 'border-line text-muted hover:text-fg',
+                )}
+              >
+                All
+              </button>
+              {skills.map((g, i) => (
+                <button
+                  key={g.key}
+                  type="button"
+                  aria-pressed={active === g.key}
+                  onClick={() => setActive((a) => (a === g.key ? null : g.key))}
+                  className={cn(
+                    'inline-flex h-8 items-center gap-1.5 rounded-full border px-3 text-xs font-medium transition-colors',
+                    active === g.key ? 'border-fg bg-fg text-bg' : 'border-line text-muted hover:text-fg',
+                  )}
+                >
+                  <span className="h-2 w-2 rounded-full" style={{ background: `hsl(${GROUP_HUES[i]} 85% 60%)` }} aria-hidden="true" />
+                  {g.title}
+                </button>
+              ))}
+              <span className="ml-auto hidden font-mono text-[11px] text-subtle md:inline">grab · fling · hover to repel</span>
+            </div>
+            <div ref={fieldRef} className="bg-[radial-gradient(ellipse_at_center,color-mix(in_srgb,var(--accent)_10%,transparent),transparent_70%)]">
+              {showField ? (
+                <Suspense fallback={<div className="h-[30rem] sm:h-[34rem]" />}>
+                  <SkillField groups={skills} active={active} onPick={(k) => setActive(k)} />
+                </Suspense>
+              ) : (
+                <div className="h-[30rem] sm:h-[34rem]" />
+              )}
+            </div>
+          </div>
+        </Reveal>
       </div>
 
       <div className="mx-auto grid max-w-6xl grid-cols-1 gap-4 px-5 sm:grid-cols-2 sm:px-8 lg:grid-cols-3">

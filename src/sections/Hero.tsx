@@ -3,6 +3,7 @@ import { ArrowDown, ArrowRight, Download, MapPin } from 'lucide-react';
 import { lazy, Suspense, useEffect, useState } from 'react';
 import { SocialIcon } from '../components/BrandIcons';
 import { MagneticButton } from '../components/MagneticButton';
+import { SystemMap } from '../components/SystemMap';
 import { profile, socials } from '../data/profile';
 import { useApp } from '../lib/app-context';
 import { isMac, scrollToId } from '../lib/utils';
@@ -96,7 +97,8 @@ export function Hero() {
         <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-bg" />
       </div>
 
-      <div className="mx-auto w-full max-w-6xl px-5 sm:px-8">
+      <div className="mx-auto grid w-full max-w-7xl items-center gap-12 px-5 sm:px-8 lg:grid-cols-[1.15fr_1fr] lg:gap-6">
+        <div>
         <m.div {...fade(0.05)} className="mb-7 flex flex-wrap items-center gap-2">
           <span className="glass inline-flex items-center gap-2 rounded-full border border-line py-1.5 pr-3.5 pl-2.5 text-xs font-medium text-fg sm:text-sm">
             <span className="relative grid h-2.5 w-2.5 place-items-center" aria-hidden="true">
@@ -110,7 +112,7 @@ export function Hero() {
           </span>
         </m.div>
 
-        <h1 className="font-display text-[clamp(3rem,11vw,8.75rem)] leading-[0.92] font-semibold tracking-[-0.045em]">
+        <h1 className="font-display text-[clamp(3rem,10vw,7.25rem)] lg:text-[clamp(4rem,7vw,7.25rem)] leading-[0.92] font-semibold tracking-[-0.045em]">
           <KineticLine text="Thota Vamsi" delay={0.15} />
           <KineticLine text="Krishna." delay={0.45} gradient />
         </h1>
@@ -158,8 +160,13 @@ export function Hero() {
               ))}
           </ul>
         </m.div>
+        </div>
 
-        <m.div {...fade(0.8)} className="mt-14 flex items-center justify-between gap-4 text-xs text-subtle">
+        <m.div {...fade(0.4)} className="lg:-mr-6">
+          <SystemMap />
+        </m.div>
+
+        <m.div {...fade(0.8)} className="flex items-center justify-between gap-4 text-xs text-subtle lg:col-span-2">
           <button
             type="button"
             onClick={() => setPaletteOpen(true)}
