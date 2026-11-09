@@ -79,7 +79,7 @@ export function About() {
             </div>
             <div>
               <p className="font-display text-2xl font-semibold">Google</p>
-              <p className="mt-1 text-sm text-muted">Incoming Software Engineer · ex-Amazon</p>
+              <p className="mt-1 text-sm text-muted">Software Engineer · ex-Amazon</p>
             </div>
           </div>
         </Tile>

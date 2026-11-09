@@ -7,16 +7,16 @@ export const profile = {
   name: 'Thota Vamsi Krishna',
   firstName: 'Vamsi',
   initials: 'VK',
-  headline: 'Incoming Software Engineer at Google',
+  headline: 'Software Engineer at Google',
   location: 'Bangalore, India',
   timezone: 'Asia/Kolkata',
   email: 'vamsikrishnathota483@gmail.com',
   resume: '/Thota_Vamsi_Krishna_Resume.pdf',
   photo: '/images/profile.webp',
   photoFallback: '/images/profile.jpg',
-  status: 'Incoming Software Engineer @ Google · ex-Amazon',
+  status: 'Software Engineer @ Google · ex-Amazon',
   summary:
-    'Software Engineer joining Google (Nov 2026). Previously at Amazon, 1+ year building backend services, rules engines, data pipelines and AWS infrastructure. Delivered a global fee-incentive launch across 8 marketplaces; built tooling that cut P0 investigations by ~90%. I also build AI agents and developer tools.',
+    'Software Engineer at Google. Previously at Amazon, 1+ year building backend services, rules engines, data pipelines and AWS infrastructure. Delivered a global fee-incentive launch across 8 marketplaces; built tooling that cut P0 investigations by ~90%. I also build AI agents and developer tools.',
   roles: ['backend services', 'rules engines', 'data pipelines', 'AWS infrastructure', 'AI agents', 'developer tools'],
 } as const;
 
@@ -57,7 +57,7 @@ export type Experience = {
 
 export const experience: Experience[] = [
   {
-    // Incoming role: intentionally no details.
+    // Current role: intentionally no public details.
     company: 'Google',
     role: 'Software Engineer',
     start: 'Nov 2026',

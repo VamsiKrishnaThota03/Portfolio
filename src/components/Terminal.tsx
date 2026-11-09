@@ -88,7 +88,7 @@ export default function Terminal() {
                 <b className="text-fg">{e.role}</b> @ {e.company}
                 {e.team ? ` (${e.team})` : ''}
                 {e.location ? `, ${e.location}` : ''}
-                {e.incoming ? ' (incoming)' : ''}
+                {e.incoming ? ' (current)' : ''}
               </div>
             ))}
           </div>,

@@ -1,6 +1,6 @@
 # Thota Vamsi Krishna · Portfolio
 
-Personal site of **Thota Vamsi Krishna**, incoming Software Engineer at Google (Nov 2026) and ex-Amazon, based in Bangalore. It's a dark, interactive single-page portfolio built with Vite, React 18, TypeScript, Tailwind CSS and Framer Motion.
+Personal site of **Thota Vamsi Krishna**, Software Engineer at Google and ex-Amazon, based in Bangalore. It's a dark, interactive single-page portfolio built with Vite, React 18, TypeScript, Tailwind CSS and Framer Motion.
 
 ![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)
 ![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black)
@@ -17,8 +17,8 @@ Personal site of **Thota Vamsi Krishna**, incoming Software Engineer at Google (
 
 The site treats a backend engineer's career like a running system you can poke at.
 
-- **Hero "system map".** I sit at the centre as `vamsi.service`, with my stack (Java, Python, AWS, rules engines, data pipelines, AI agents, React/TS, datastores) orbiting as dependencies. Requests flow along the edges as glowing packets. You can hover or focus a node to see what it covers, or drag it and watch it spring back. Behind it, a cursor-reactive constellation canvas. The name animates in letter by letter, the role words rotate, the CTAs are magnetic, and a status pill reads *Incoming Software Engineer @ Google · ex-Amazon*.
-- **Career as a distributed trace.** Each role is a span on a 2023–2027 time axis. Google shows as a striped "incoming" span. Selecting a span opens its attributes, metrics (e.g. `marketplaces=8`, `ec2_instances=512`) and events. It's a keyboard-navigable tablist.
+- **Hero "system map".** I sit at the centre as `vamsi.service`, with my stack (Java, Python, AWS, rules engines, data pipelines, AI agents, React/TS, datastores) orbiting as dependencies. Requests flow along the edges as glowing packets. You can hover or focus a node to see what it covers, or drag it and watch it spring back. Behind it, a cursor-reactive constellation canvas. The name animates in letter by letter, the role words rotate, the CTAs are magnetic, and a status pill reads *Software Engineer @ Google · ex-Amazon*.
+- **Career as a distributed trace.** Each role is a span on a 2023–2027 time axis. Google shows as the current, striped span. Selecting a span opens its attributes, metrics (e.g. `marketplaces=8`, `ec2_instances=512`) and events. It's a keyboard-navigable tablist.
 - **Lab: incident replay.** A playable, fictional replay of the P0 investigator CLI. It walks five pipeline jobs, streams their outputs, isolates the failing job, types out an LLM root-cause summary and compares time to root cause (5–6 h by hand vs ~30 min).
 - **Fit finder.** A Drools-flavoured rules engine for recruiters. Toggle what the role needs and the matching rules "fire", each backed by real evidence from my work, then mail the match to me in one click.
 - **Skill field.** A hand-rolled force simulation: every skill is a bubble you can grab and fling. Bubbles collide, shy away from the cursor and re-cluster when you pick a group.

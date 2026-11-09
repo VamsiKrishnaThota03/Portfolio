@@ -11,7 +11,7 @@ const toIndex = (s: string) => {
   return Number(yr) * 12 + MONTHS.indexOf(mon);
 };
 
-// Axis: Jan 2023 to Jun 2027 so the incoming role has room to "run".
+// Axis: Jan 2023 to Jun 2027 so the current role has room to "run".
 const AXIS_START = toIndex('Jan 2023');
 const AXIS_END = toIndex('Jun 2027');
 const span = AXIS_END - AXIS_START;
@@ -58,7 +58,7 @@ export function Experience() {
   return (
     <section id="experience" aria-labelledby="experience-title" className="relative mx-auto max-w-6xl px-5 py-20 sm:px-8 md:py-28">
       <SectionHeading id="experience" eyebrow="Experience" title={<>My career, as a <span className="text-gradient">distributed trace</span>.</>}>
-        Each role is a span. Pick one to see its attributes, metrics and events. The next span is Google.
+        Each role is a span. Pick one to see its attributes, metrics and events. The latest span is Google.
       </SectionHeading>
 
       <Reveal>
@@ -114,7 +114,7 @@ export function Experience() {
                       <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: `hsl(${hue} 85% 62%)` }} aria-hidden="true" />
                       <span className="truncate font-display text-[15px] font-semibold">{x.company}</span>
                       {x.incoming && (
-                        <span className="rounded-full bg-accent/15 px-1.5 py-0.5 font-mono text-[9px] text-accent uppercase">incoming</span>
+                        <span className="rounded-full bg-accent/15 px-1.5 py-0.5 font-mono text-[9px] text-accent uppercase">current</span>
                       )}
                     </span>
                     <span className="mt-0.5 block truncate pl-4 text-xs text-subtle">
@@ -144,7 +144,7 @@ export function Experience() {
                       transition={{ duration: 0.9, delay: 0.1 + i * 0.08, ease: [0.22, 1, 0.36, 1] }}
                     >
                       {s.months >= 5 && <span className="hidden sm:inline">{fmtDuration(s.months)}</span>}
-                      {x.incoming && <span className="hidden sm:inline">next →</span>}
+                      {x.incoming && <span className="hidden sm:inline">now →</span>}
                     </m.span>
                   </span>
                 </button>
@@ -177,7 +177,7 @@ export function Experience() {
                 </div>
 
                 {e.incoming ? (
-                  <p className="mt-5 max-w-xl text-muted">Joining Google as a Software Engineer in November 2026.</p>
+                  <p className="mt-5 max-w-xl text-muted">Software Engineer at Google since November 2026.</p>
                 ) : (
                   <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_1.6fr]">
                     <div className="space-y-5">
