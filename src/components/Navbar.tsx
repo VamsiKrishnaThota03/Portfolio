@@ -104,7 +104,10 @@ export function Navbar() {
           </button>
           <button
             type="button"
-            onClick={toggleTheme}
+            onClick={(e) => {
+              const r = e.currentTarget.getBoundingClientRect();
+              toggleTheme({ x: r.left + r.width / 2, y: r.top + r.height / 2 });
+            }}
             className="grid h-9 w-9 place-items-center rounded-full border border-line bg-surface text-muted transition-colors hover:text-fg"
             aria-label={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
           >

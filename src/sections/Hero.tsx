@@ -1,6 +1,6 @@
-import { AnimatePresence, m, useReducedMotion } from 'framer-motion';
+import { AnimatePresence, m, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion';
 import { ArrowDown, ArrowRight, Download, MapPin } from 'lucide-react';
-import { lazy, Suspense, useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react';
 import { SocialIcon } from '../components/BrandIcons';
 import { MagneticButton } from '../components/MagneticButton';
 import { SystemMap } from '../components/SystemMap';
@@ -23,7 +23,19 @@ const gradientLetter = (i: number, n: number) => ({
   color: 'transparent',
 });
 
-function KineticLine({ text, delay, className, gradient }: { text: string; delay: number; className?: string; gradient?: boolean }) {
+function KineticLine({
+  text,
+  delay,
+  className,
+  gradient,
+  play,
+}: {
+  text: string;
+  delay: number;
+  className?: string;
+  gradient?: boolean;
+  play: boolean;
+}) {
   const reduce = useReducedMotion();
   return (
     <span className={`block overflow-hidden pb-[0.08em] ${className ?? ''}`}>
@@ -35,7 +47,7 @@ function KineticLine({ text, delay, className, gradient }: { text: string; delay
             className="inline-block transition-transform duration-300 ease-out will-change-transform hover:-translate-y-[0.08em]"
             style={gradient ? gradientLetter(i, text.length) : undefined}
             initial={reduce ? false : { y: '110%', rotate: 6 }}
-            animate={{ y: '0%', rotate: 0 }}
+            animate={play ? { y: '0%', rotate: 0 } : undefined}
             transition={{ duration: 0.9, delay: delay + i * 0.035, ease }}
           >
             {ch === ' ' ? ' ' : ch}
@@ -77,27 +89,71 @@ function RotatingWord({ words }: { words: readonly string[] }) {
 }
 
 export function Hero() {
-  const { setPaletteOpen } = useApp();
+  const { setPaletteOpen, introDone } = useApp();
   const [mac] = useState(isMac);
   const reduce = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
+  // The entrance is held while the intro curtain covers the page, so the
+  // kinetic type rises exactly as the curtain lifts.
   const fade = (d: number) =>
-    reduce ? {} : { initial: { opacity: 0, y: 16 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.8, delay: d, ease } };
+    reduce
+      ? {}
+      : {
+          initial: { opacity: 0, y: 16 },
+          animate: introDone ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 },
+          transition: { duration: 0.8, delay: d, ease },
+        };
+
+  // Scroll exit: the hero recedes (lifts, fades, shrinks slightly) as you scroll past it.
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end start'] });
+  const exitY = useTransform(scrollYProgress, [0, 1], [0, -110]);
+  const exitOpacity = useTransform(scrollYProgress, [0, 0.75], [1, 0]);
+  const exitScale = useTransform(scrollYProgress, [0, 1], [1, 0.965]);
+
+  // Mouse depth: background layers drift at different depths towards the cursor.
+  const px = useMotionValue(0);
+  const py = useMotionValue(0);
+  const spx = useSpring(px, { stiffness: 50, damping: 18, mass: 0.8 });
+  const spy = useSpring(py, { stiffness: 50, damping: 18, mass: 0.8 });
+  const orb1x = useTransform(spx, (v) => v * -46);
+  const orb1y = useTransform(spy, (v) => v * -34);
+  const orb2x = useTransform(spx, (v) => v * 30);
+  const orb2y = useTransform(spy, (v) => v * 24);
+  const orb3x = useTransform(spx, (v) => v * -18);
+  const orb3y = useTransform(spy, (v) => v * 26);
+  const gridX = useTransform(spx, (v) => v * 10);
+  const gridY = useTransform(spy, (v) => v * 8);
+
+  const onPointerMove = (e: ReactPointerEvent<HTMLElement>) => {
+    if (reduce || e.pointerType !== 'mouse') return;
+    px.set(e.clientX / window.innerWidth - 0.5);
+    py.set(e.clientY / window.innerHeight - 0.5);
+  };
 
   return (
-    <section id="top" aria-label="Introduction" className="relative isolate flex min-h-[100svh] items-center overflow-hidden pt-24 pb-16">
+    <section
+      id="top"
+      ref={sectionRef}
+      aria-label="Introduction"
+      onPointerMove={onPointerMove}
+      className="relative isolate flex min-h-[100svh] items-center overflow-hidden pt-24 pb-16"
+    >
       {/* Background layers */}
       <div aria-hidden="true" className="absolute inset-0 -z-10">
-        <div className="absolute -top-40 left-1/2 h-[42rem] w-[42rem] -translate-x-[70%] rounded-full bg-accent/25 blur-[120px]" />
-        <div className="absolute top-20 right-0 h-[30rem] w-[30rem] translate-x-1/4 rounded-full bg-accent-2/15 blur-[120px]" />
-        <div className="absolute bottom-0 left-10 h-[22rem] w-[22rem] rounded-full bg-accent-3/10 blur-[110px]" />
-        <div className="grid-bg absolute inset-0 opacity-60" />
+        <m.div style={reduce ? undefined : { x: orb1x, y: orb1y }} className="absolute -top-40 left-1/2 h-[42rem] w-[42rem] -translate-x-[70%] rounded-full bg-accent/25 blur-[120px]" />
+        <m.div style={reduce ? undefined : { x: orb2x, y: orb2y }} className="absolute top-20 right-0 h-[30rem] w-[30rem] translate-x-1/4 rounded-full bg-accent-2/15 blur-[120px]" />
+        <m.div style={reduce ? undefined : { x: orb3x, y: orb3y }} className="absolute bottom-0 left-10 h-[22rem] w-[22rem] rounded-full bg-accent-3/10 blur-[110px]" />
+        <m.div style={reduce ? undefined : { x: gridX, y: gridY }} className="grid-bg absolute -inset-4 opacity-60" />
         <Suspense fallback={null}>
           <HeroCanvas />
         </Suspense>
         <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-bg" />
       </div>
 
-      <div className="mx-auto grid w-full max-w-7xl items-center gap-12 px-5 sm:px-8 lg:grid-cols-[1.15fr_1fr] lg:gap-6">
+      <m.div
+        style={reduce ? undefined : { y: exitY, opacity: exitOpacity, scale: exitScale }}
+        className="mx-auto grid w-full max-w-7xl items-center gap-12 px-5 sm:px-8 lg:grid-cols-[1.15fr_1fr] lg:gap-6"
+      >
         <div>
         <m.div {...fade(0.05)} className="mb-7 flex flex-wrap items-center gap-2">
           <span className="glass inline-flex items-center gap-2 rounded-full border border-line py-1.5 pr-3.5 pl-2.5 text-xs font-medium text-fg sm:text-sm">
@@ -113,8 +169,8 @@ export function Hero() {
         </m.div>
 
         <h1 className="font-display text-[clamp(3rem,10vw,7.25rem)] lg:text-[clamp(4rem,7vw,7.25rem)] leading-[0.92] font-semibold tracking-[-0.045em]">
-          <KineticLine text="Thota Vamsi" delay={0.15} />
-          <KineticLine text="Krishna." delay={0.45} gradient />
+          <KineticLine text="Thota Vamsi" delay={0.15} play={introDone} />
+          <KineticLine text="Krishna." delay={0.45} gradient play={introDone} />
         </h1>
 
         <m.p {...fade(0.5)} className="mt-7 max-w-2xl text-lg text-muted sm:text-xl md:text-2xl">
@@ -196,7 +252,7 @@ export function Hero() {
             Scroll to explore <ArrowDown size={12} aria-hidden="true" />
           </a>
         </m.div>
-      </div>
+      </m.div>
     </section>
   );
 }

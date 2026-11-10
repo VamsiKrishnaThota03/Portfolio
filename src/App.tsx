@@ -14,6 +14,10 @@ import { TerminalSection } from './sections/TerminalSection';
 import { Lab } from './sections/Lab';
 import { FitFinder } from './sections/FitFinder';
 import { SectionRail } from './components/SectionRail';
+import { CursorFx } from './components/CursorFx';
+import { Intro } from './components/Intro';
+import { VelocityMarquee } from './components/VelocityMarquee';
+import { profile } from './data/profile';
 import { confetti } from './components/Confetti';
 
 const KONAMI = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
@@ -23,7 +27,7 @@ const CommandPalette = lazy(() => import('./components/CommandPalette'));
 const loadMotionFeatures = () => import('./lib/motion-features').then((r) => r.default);
 
 export default function App() {
-  const { paletteOpen, setPaletteOpen, toast } = useApp();
+  const { paletteOpen, setPaletteOpen, toast, introDone, finishIntro } = useApp();
 
   // Easter egg: the Konami code.
   useEffect(() => {
@@ -71,8 +75,10 @@ export default function App() {
       </a>
       <Navbar />
       <SectionRail />
+      <AnimatePresence>{!introDone && <Intro onDone={finishIntro} />}</AnimatePresence>
       <main id="main">
         <Hero />
+        <VelocityMarquee items={profile.roles} />
         <About />
         <Experience />
         <Lab />
@@ -87,6 +93,7 @@ export default function App() {
         <AnimatePresence>{paletteOpen && <CommandPalette onClose={() => setPaletteOpen(false)} />}</AnimatePresence>
       </Suspense>
       <Toaster />
+      <CursorFx />
       <div aria-hidden="true" className="noise pointer-events-none fixed inset-0 z-[60] opacity-[0.025] mix-blend-overlay" />
     </MotionConfig>
     </LazyMotion>

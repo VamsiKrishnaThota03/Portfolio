@@ -1,4 +1,4 @@
-import { AnimatePresence, LayoutGroup, m, useReducedMotion } from 'framer-motion';
+import { AnimatePresence, LayoutGroup, m, useReducedMotion, useScroll, useSpring, useTransform, useVelocity } from 'framer-motion';
 import { ArrowUpRight, Play } from 'lucide-react';
 import { lazy, Suspense, useMemo, useState } from 'react';
 import { GithubIcon } from '../components/BrandIcons';
@@ -17,6 +17,7 @@ function Card({ p, onOpen }: { p: Project; onOpen: (p: Project) => void }) {
   return (
     <article
       {...fx}
+      data-cursor="View"
       aria-labelledby={titleId}
       className="card spotlight group flex h-full flex-col overflow-hidden transition-[transform,border-color] duration-300 ease-out will-change-transform hover:border-accent/40"
     >
@@ -90,6 +91,12 @@ export function Projects() {
   const [selected, setSelected] = useState<Project | null>(null);
   const reduce = useReducedMotion();
 
+  // Fast scrolling shears the grid slightly; it springs back to rest.
+  const { scrollY } = useScroll();
+  const velocity = useVelocity(scrollY);
+  const smoothVelocity = useSpring(velocity, { stiffness: 250, damping: 50 });
+  const skewY = useTransform(smoothVelocity, [-1500, 1500], [-1.6, 1.6]);
+
   const list = useMemo(() => (filter === 'all' ? projects : projects.filter((p) => p.categories.includes(filter))), [filter]);
   const counts = useMemo(() => {
     const c: Record<string, number> = { all: projects.length };
@@ -132,7 +139,7 @@ export function Projects() {
         Showing {list.length} projects
       </p>
 
-      <m.ul layout={!reduce} className="grid grid-cols-1 gap-4 md:grid-cols-6 md:gap-5">
+      <m.ul layout={!reduce} style={reduce ? undefined : { skewY }} className="grid grid-cols-1 gap-4 md:grid-cols-6 md:gap-5">
         <AnimatePresence mode="popLayout" initial={false}>
           {list.map((p) => (
             <m.li

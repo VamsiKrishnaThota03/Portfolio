@@ -153,9 +153,39 @@
     background-size: 56px 56px;
     mask-image: radial-gradient(ellipse at center, #000 20%, transparent 75%);
   }
+  .text-outline {
+    -webkit-text-stroke: 1.5px color-mix(in srgb, var(--fg) 45%, transparent);
+    color: transparent;
+  }
   .noise {
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.5'/></svg>");
   }
+}
+
+/* Custom cursor (CursorFx): hide the native cursor on fine pointers,
+   but keep the I-beam for anything that accepts text. */
+@media (hover: hover) and (pointer: fine) {
+  html.cursor-fx,
+  html.cursor-fx * {
+    cursor: none !important;
+  }
+  html.cursor-fx :where(input, textarea, select, [contenteditable='true']) {
+    cursor: auto !important;
+  }
+}
+
+/* Theme switch: the circular wipe is driven from JS; stop the default
+   cross-fade so only the clip-path reveal plays. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  z-index: 1;
+}
+::view-transition-new(root) {
+  z-index: 2;
 }
 
 @keyframes marquee {
