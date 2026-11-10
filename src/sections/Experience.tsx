@@ -50,9 +50,13 @@ function buildRows(list: Exp[]): Row[] {
 export function Experience() {
   const rows = useMemo(() => buildRows(experience), []);
   const spans = useMemo(() => rows.map((r) => spanOf(r.exp)), [rows]);
+  // Open on the company span that holds teams, so the panel leads with the
+  // full tenure (Amazon: Jul 2025 – Nov 2026) rather than one team's dates.
   const [sel, setSel] = useState(() => {
-    const i = rows.findIndex((r) => r.exp.highlights.length > 0);
-    return i === -1 ? 0 : i;
+    const company = rows.findIndex((r) => r.exp.teams?.length);
+    if (company !== -1) return company;
+    const detailed = rows.findIndex((r) => r.exp.highlights.length > 0);
+    return detailed === -1 ? 0 : detailed;
   });
   const tabs = useRef<(HTMLButtonElement | null)[]>([]);
   const reduce = useReducedMotion();
