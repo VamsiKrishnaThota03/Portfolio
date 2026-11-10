@@ -53,6 +53,11 @@ export type Experience = {
   highlights: string[];
   incoming?: boolean;
   metrics?: { k: string; v: string }[];
+  /**
+   * Nested stints: one company, several teams. Rendered as child spans of
+   * the company span, so the timeline reads like a real distributed trace.
+   */
+  teams?: Experience[];
 };
 
 export const experience: Experience[] = [
@@ -71,49 +76,83 @@ export const experience: Experience[] = [
   {
     company: 'Amazon',
     role: 'Software Development Engineer',
-    team: 'Seller Fees & Incentives',
+    start: 'Jul 2025',
+    end: 'Nov 2026',
+    location: 'Chennai → Bangalore',
+    summary:
+      'Two teams over 1y 5m: first infrastructure, reliability and security for a customer-facing Alexa service, then the fee-incentive platform that onboards new sellers.',
+    stack: [
+      'Java',
+      'Python',
+      'TypeScript',
+      'React',
+      'Drools',
+      'AWS CDK',
+      'Lambda',
+      'EC2',
+      'SQS',
+      'S3',
+      'DynamoDB',
+      'Glue',
+      'IAM',
+      'CloudWatch',
+    ],
     metrics: [
       { k: 'marketplaces', v: '8' },
       { k: 'p0_investigation', v: '5-6h → ~30m' },
-      { k: 'eligibility_configs', v: '45+' },
-      { k: 'benefits_cut_over', v: '5' },
-    ],
-    start: 'Jan 2026',
-    end: 'Nov 2026',
-    location: 'Bangalore',
-    summary:
-      'Fee-incentive programs for new sellers: event-driven discount platform, rules-based eligibility and the tooling that keeps it healthy.',
-    stack: ['Java', 'Python', 'Drools', 'AWS Lambda', 'CDK', 'SQS', 'S3', 'DynamoDB', 'Glue', 'CloudWatch', 'SQL pipelines', 'React'],
-    highlights: [
-      'Key contributor to the global launch of a new-seller fee-incentive program (Jul 2026): 6+ fee benefits across 8 marketplaces in NA, EU and JP, reaching millions of sellers.',
-      'Led the migration of a fee-exemption benefit into an event-driven discount platform (S3 → SQS → rules engine), writing the Drools rules plus unit, integration and end-to-end tests.',
-      'Moved eligibility from SQL batch pipelines into a rules-based eligibility engine with 45+ marketplace-specific configs, shrinking the pipeline to 3 jobs.',
-      'Designed a zero-overlap cutover for 5 benefits across 2 CDK pipelines and led beta and production UAT.',
-      'Migrated benefit preview and calculation calls to a new Fee Gateway Service.',
-      'Conceived and built a Python CLI that automates P0 seller-ticket root-causing: it traces 4-6 dependent pipeline jobs, streams multi-GB outputs and uses an internal LLM to explain the cause. Investigations dropped from 5-6 hours to ~30 minutes (~90%), and the tool was adopted team-wide.',
-      'Added SEV-3 alarms on critical pipeline jobs and built an S3 → DynamoDB Glue job.',
-    ],
-  },
-  {
-    company: 'Amazon',
-    role: 'Software Development Engineer',
-    team: 'Alexa Mobile',
-    metrics: [
       { k: 'ec2_instances', v: '512' },
-      { k: 'resources_replicated', v: '511' },
-      { k: 'apis_monitored', v: '24' },
       { k: 'changes_shipped', v: '64' },
     ],
-    start: 'Jul 2025',
-    end: 'Dec 2025',
-    location: 'Chennai',
-    summary: 'Infrastructure, reliability and security for a customer-facing Alexa service.',
-    stack: ['Java', 'TypeScript', 'React', 'AWS CDK', 'Lambda', 'EC2', 'IAM', 'CloudWatch'],
-    highlights: [
-      'Led the region migration of a customer-facing Alexa service out of Dublin: IAM roles across 3 AWS accounts, quota sync for 512 EC2 instances and 511 AWS resources replicated via batched Lambda jobs.',
-      'Peak-readiness and security hardening: timeout alarms, emergency deploy blocking, bake times, CSP headers, and fixes for request-ID/log injection and sensitive-data handling.',
-      'Built CloudWatch monitoring for 24 APIs and added code-coverage tracking.',
-      'Fixed React bugs and retired 6 legacy experiments; shipped 64 changes across 15 packages.',
+    highlights: [],
+    teams: [
+      {
+        company: 'Amazon',
+        role: 'Software Development Engineer',
+        team: 'Seller Fees & Incentives',
+        metrics: [
+          { k: 'marketplaces', v: '8' },
+          { k: 'p0_investigation', v: '5-6h → ~30m' },
+          { k: 'eligibility_configs', v: '45+' },
+          { k: 'benefits_cut_over', v: '5' },
+        ],
+        start: 'Jan 2026',
+        end: 'Nov 2026',
+        location: 'Bangalore',
+        summary:
+          'Fee-incentive programs for new sellers: event-driven discount platform, rules-based eligibility and the tooling that keeps it healthy.',
+        stack: ['Java', 'Python', 'Drools', 'AWS Lambda', 'CDK', 'SQS', 'S3', 'DynamoDB', 'Glue', 'CloudWatch', 'SQL pipelines', 'React'],
+        highlights: [
+          'Key contributor to the global launch of a new-seller fee-incentive program (Jul 2026): 6+ fee benefits across 8 marketplaces in NA, EU and JP, reaching millions of sellers.',
+          'Led the migration of a fee-exemption benefit into an event-driven discount platform (S3 → SQS → rules engine), writing the Drools rules plus unit, integration and end-to-end tests.',
+          'Moved eligibility from SQL batch pipelines into a rules-based eligibility engine with 45+ marketplace-specific configs, shrinking the pipeline to 3 jobs.',
+          'Designed a zero-overlap cutover for 5 benefits across 2 CDK pipelines and led beta and production UAT.',
+          'Migrated benefit preview and calculation calls to a new Fee Gateway Service.',
+          'Conceived and built a Python CLI that automates P0 seller-ticket root-causing: it traces 4-6 dependent pipeline jobs, streams multi-GB outputs and uses an internal LLM to explain the cause. Investigations dropped from 5-6 hours to ~30 minutes (~90%), and the tool was adopted team-wide.',
+          'Added SEV-3 alarms on critical pipeline jobs and built an S3 → DynamoDB Glue job.',
+        ],
+      },
+      {
+        company: 'Amazon',
+        role: 'Software Development Engineer',
+        team: 'Alexa Mobile',
+        metrics: [
+          { k: 'ec2_instances', v: '512' },
+          { k: 'resources_replicated', v: '511' },
+          { k: 'apis_monitored', v: '24' },
+          { k: 'changes_shipped', v: '64' },
+        ],
+        start: 'Jul 2025',
+        end: 'Dec 2025',
+        location: 'Chennai',
+        summary: 'Infrastructure, reliability and security for a customer-facing Alexa service.',
+        stack: ['Java', 'TypeScript', 'React', 'AWS CDK', 'Lambda', 'EC2', 'IAM', 'CloudWatch'],
+        highlights: [
+          'Led the region migration of a customer-facing Alexa service out of Dublin: IAM roles across 3 AWS accounts, quota sync for 512 EC2 instances and 511 AWS resources replicated via batched Lambda jobs.',
+          'Peak-readiness and security hardening: timeout alarms, emergency deploy blocking, bake times, CSP headers, and fixes for request-ID/log injection and sensitive-data handling.',
+          'Built CloudWatch monitoring for 24 APIs and added code-coverage tracking.',
+          'Fixed React bugs and retired 6 legacy experiments; shipped 64 changes across 15 packages.',
+        ],
+      },
     ],
   },
   {

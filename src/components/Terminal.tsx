@@ -82,8 +82,9 @@ export default function Terminal() {
       case 'exp':
         print(
           <div className="space-y-1">
-            {experience.map((e) => (
-              <div key={e.company + e.start}>
+            {/* Flatten nested team spans so every stint is listed. */}
+            {experience.flatMap((e) => [e, ...(e.teams ?? [])]).map((e) => (
+              <div key={e.company + (e.team ?? e.role) + e.start} className={e.team ? 'pl-4' : undefined}>
                 <span className="text-accent">{e.start === e.end ? e.start : `${e.start} – ${e.end}`}</span>{'  '}
                 <b className="text-fg">{e.role}</b> @ {e.company}
                 {e.team ? ` (${e.team})` : ''}

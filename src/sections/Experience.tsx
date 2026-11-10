@@ -1,5 +1,5 @@
-import { AnimatePresence, m, useReducedMotion } from 'framer-motion';
-import { MapPin } from 'lucide-react';
+import { AnimatePresence, m, useInView, useReducedMotion } from 'framer-motion';
+import { ArrowRight, MapPin } from 'lucide-react';
 import { useMemo, useRef, useState, type KeyboardEvent } from 'react';
 import { Reveal, SectionHeading } from '../components/Reveal';
 import { experience, type Experience as Exp } from '../data/profile';
@@ -34,31 +34,57 @@ function fmtDuration(m: number) {
 const period = (e: Exp) => (e.start === e.end ? e.start : `${e.start} – ${e.end}`);
 const hues = [210, 265, 35, 160, 330];
 
+/** One row of the trace: a company span, or a team span nested inside one. */
+type Row = { exp: Exp; depth: number; hue: number };
+
+function buildRows(list: Exp[]): Row[] {
+  const rows: Row[] = [];
+  list.forEach((e, i) => {
+    const hue = hues[i % hues.length];
+    rows.push({ exp: e, depth: 0, hue });
+    e.teams?.forEach((t, j) => rows.push({ exp: t, depth: 1, hue: (hue + 28 * (j + 1)) % 360 }));
+  });
+  return rows;
+}
+
 export function Experience() {
-  const firstDetailed = experience.findIndex((e) => e.highlights.length > 0);
-  const [sel, setSel] = useState(firstDetailed);
+  const rows = useMemo(() => buildRows(experience), []);
+  const spans = useMemo(() => rows.map((r) => spanOf(r.exp)), [rows]);
+  const [sel, setSel] = useState(() => {
+    const i = rows.findIndex((r) => r.exp.highlights.length > 0);
+    return i === -1 ? 0 : i;
+  });
   const tabs = useRef<(HTMLButtonElement | null)[]>([]);
   const reduce = useReducedMotion();
-  const spans = useMemo(() => experience.map(spanOf), []);
   const totalMonths = toIndex('Nov 2026') - toIndex('Jun 2023');
-  const e = experience[sel];
+  const e = rows[sel].exp;
+
+  // One trigger for the whole trace, which then staggers every bar. Observing
+  // each bar individually is unreliable: a bar at scaleX 0 has no area.
+  const traceRef = useRef<HTMLDivElement>(null);
+  const traceInView = useInView(traceRef, { once: true, margin: '0px 0px -10% 0px' });
+  const play = reduce || traceInView;
+
+  const select = (i: number) => {
+    setSel(i);
+    tabs.current[i]?.focus();
+  };
 
   const onKey = (ev: KeyboardEvent<HTMLButtonElement>, i: number) => {
     let n: number;
-    if (ev.key === 'ArrowDown' || ev.key === 'ArrowRight') n = (i + 1) % experience.length;
-    else if (ev.key === 'ArrowUp' || ev.key === 'ArrowLeft') n = (i - 1 + experience.length) % experience.length;
+    if (ev.key === 'ArrowDown' || ev.key === 'ArrowRight') n = (i + 1) % rows.length;
+    else if (ev.key === 'ArrowUp' || ev.key === 'ArrowLeft') n = (i - 1 + rows.length) % rows.length;
     else if (ev.key === 'Home') n = 0;
-    else if (ev.key === 'End') n = experience.length - 1;
+    else if (ev.key === 'End') n = rows.length - 1;
     else return;
     ev.preventDefault();
-    setSel(n);
-    tabs.current[n]?.focus();
+    select(n);
   };
 
   return (
     <section id="experience" aria-labelledby="experience-title" className="relative mx-auto max-w-6xl px-5 py-20 sm:px-8 md:py-28">
       <SectionHeading id="experience" eyebrow="Experience" title={<>My career, as a <span className="text-gradient">distributed trace</span>.</>}>
-        Each role is a span. Pick one to see its attributes, metrics and events. The latest span is Google.
+        Each role is a span, and a team inside a company is a child span. Pick one to see its attributes, metrics and events.
       </SectionHeading>
 
       <Reveal>
@@ -67,14 +93,14 @@ export function Experience() {
             <span>
               <span className="text-accent">trace</span> career.vamsi
             </span>
-            <span>spans: {experience.length}</span>
+            <span>spans: {rows.length}</span>
             <span>duration: {fmtDuration(totalMonths)}</span>
             <span className="inline-flex items-center gap-1.5">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" aria-hidden="true" /> status: OK
             </span>
           </div>
 
-          <div className="hidden grid-cols-[15rem_1fr] border-b border-line px-6 py-2 font-mono text-[10px] text-subtle md:grid" aria-hidden="true">
+          <div className="hidden grid-cols-[16rem_1fr] border-b border-line px-6 py-2 font-mono text-[10px] text-subtle md:grid" aria-hidden="true">
             <span>span</span>
             <div className="relative h-4">
               {[2023, 2024, 2025, 2026, 2027].map((y) => (
@@ -85,14 +111,15 @@ export function Experience() {
             </div>
           </div>
 
-          <div role="tablist" aria-label="Roles" aria-orientation="vertical">
-            {experience.map((x, i) => {
+          <div ref={traceRef} role="tablist" aria-label="Roles and teams" aria-orientation="vertical">
+            {rows.map((row, i) => {
+              const x = row.exp;
               const s = spans[i];
-              const hue = hues[i % hues.length];
               const selected = i === sel;
+              const child = row.depth > 0;
               return (
                 <button
-                  key={x.company + x.start}
+                  key={`${x.company}-${x.team ?? x.role}-${x.start}`}
                   ref={(b) => {
                     tabs.current[i] = b;
                   }}
@@ -105,20 +132,26 @@ export function Experience() {
                   onClick={() => setSel(i)}
                   onKeyDown={(ev) => onKey(ev, i)}
                   className={cn(
-                    'grid w-full grid-cols-1 gap-2 border-b border-line px-4 py-3.5 text-left transition-colors last:border-b-0 sm:px-6 md:grid-cols-[15rem_1fr] md:items-center md:gap-0',
+                    'grid w-full grid-cols-1 gap-2 border-b border-line px-4 py-3.5 text-left transition-colors last:border-b-0 sm:px-6 md:grid-cols-[16rem_1fr] md:items-center md:gap-0',
                     selected ? 'bg-surface-2' : 'hover:bg-surface',
                   )}
                 >
-                  <span className="min-w-0 pr-4">
+                  <span className={cn('min-w-0 pr-4', child && 'pl-4')}>
                     <span className="flex items-center gap-2">
-                      <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: `hsl(${hue} 85% 62%)` }} aria-hidden="true" />
-                      <span className="truncate font-display text-[15px] font-semibold">{x.company}</span>
+                      {/* Nesting guide: a small elbow marks a child span. */}
+                      {child && (
+                        <span aria-hidden="true" className="-ml-3 h-3 w-2.5 shrink-0 rounded-bl-[4px] border-b border-l border-line" />
+                      )}
+                      <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: `hsl(${row.hue} 85% 62%)` }} aria-hidden="true" />
+                      <span className={cn('truncate font-display font-semibold', child ? 'text-[14px]' : 'text-[15px]')}>
+                        {child ? x.team : x.company}
+                      </span>
                       {x.incoming && (
                         <span className="rounded-full bg-accent/15 px-1.5 py-0.5 font-mono text-[9px] text-accent uppercase">current</span>
                       )}
                     </span>
                     <span className="mt-0.5 block truncate pl-4 text-xs text-subtle">
-                      {x.team ?? x.role} · {period(x)}
+                      {x.teams ? `${x.teams.length} teams` : child ? x.role : (x.team ?? x.role)} · {period(x)}
                     </span>
                   </span>
                   <span className="relative block h-7" aria-hidden="true">
@@ -127,21 +160,24 @@ export function Experience() {
                     ))}
                     <m.span
                       className={cn(
-                        'absolute top-1/2 flex h-5 -translate-y-1/2 items-center overflow-hidden rounded-md px-2 font-mono text-[10px] whitespace-nowrap text-white',
+                        'absolute top-1/2 flex -translate-y-1/2 items-center overflow-hidden rounded-md px-2 font-mono text-[10px] whitespace-nowrap text-white',
+                        child ? 'h-4' : 'h-5',
                         selected && 'ring-2 ring-white/50',
                       )}
                       style={{
                         left: `${pct(s.start)}%`,
                         width: `max(${pct(s.end) - pct(s.start)}%, 6px)`,
                         background: x.incoming
-                          ? `repeating-linear-gradient(135deg, hsl(${hue} 85% 52% / 0.9) 0 6px, hsl(${hue} 85% 52% / 0.45) 6px 12px)`
-                          : `linear-gradient(90deg, hsl(${hue} 80% 48%), hsl(${(hue + 40) % 360} 80% 52%))`,
+                          ? `repeating-linear-gradient(135deg, hsl(${row.hue} 85% 52% / 0.9) 0 6px, hsl(${row.hue} 85% 52% / 0.45) 6px 12px)`
+                          : `linear-gradient(90deg, hsl(${row.hue} 80% 48%), hsl(${(row.hue + 40) % 360} 80% 52%))`,
+                        // A parent span is the envelope of its children, so it
+                        // reads as a container rather than work of its own.
+                        opacity: x.teams ? 0.55 : 1,
                         transformOrigin: 'left center',
                       }}
                       initial={reduce ? false : { scaleX: 0 }}
-                      whileInView={{ scaleX: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.9, delay: 0.1 + i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                      animate={play ? { scaleX: 1 } : { scaleX: 0 }}
+                      transition={{ duration: 0.9, delay: 0.1 + i * 0.07, ease: [0.22, 1, 0.36, 1] }}
                     >
                       {s.months >= 5 && <span className="hidden sm:inline">{fmtDuration(s.months)}</span>}
                       {x.incoming && <span className="hidden sm:inline">now →</span>}
@@ -201,24 +237,66 @@ export function Experience() {
                       </ul>
                     </div>
                     <div>
-                      <p className="mb-3 font-mono text-[11px] text-subtle">events ({e.highlights.length})</p>
-                      <ol className="relative space-y-3 border-l border-line pl-5">
-                        {e.highlights.map((h, i) => (
-                          <m.li
-                            key={i}
-                            initial={reduce ? false : { opacity: 0, x: -6 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: 0.03 * i }}
-                            className="relative text-[15px] leading-relaxed text-muted"
-                          >
-                            <span
-                              aria-hidden="true"
-                              className="absolute top-2 -left-[25px] h-2.5 w-2.5 rounded-full border-2 border-bg-2 bg-gradient-to-br from-accent to-accent-2"
-                            />
-                            {h}
-                          </m.li>
-                        ))}
-                      </ol>
+                      {e.teams ? (
+                        <>
+                          <p className="mb-3 font-mono text-[11px] text-subtle">child spans ({e.teams.length})</p>
+                          <ul className="space-y-2.5">
+                            {e.teams.map((t) => {
+                              const target = rows.findIndex((r) => r.exp === t);
+                              return (
+                                <li key={t.team}>
+                                  <button
+                                    type="button"
+                                    onClick={() => select(target)}
+                                    className="group flex w-full items-start gap-3 rounded-xl border border-line bg-surface px-4 py-3 text-left transition-colors hover:border-accent/50 hover:bg-surface-2"
+                                  >
+                                    <span
+                                      aria-hidden="true"
+                                      className="mt-1.5 h-2 w-2 shrink-0 rounded-full"
+                                      style={{ background: `hsl(${rows[target]?.hue ?? 265} 85% 62%)` }}
+                                    />
+                                    <span className="min-w-0 flex-1">
+                                      <span className="flex flex-wrap items-center gap-x-2">
+                                        <span className="font-display text-[15px] font-semibold">{t.team}</span>
+                                        <span className="font-mono text-[10px] text-subtle">
+                                          {period(t)} · {fmtDuration(spanOf(t).months)}
+                                        </span>
+                                      </span>
+                                      <span className="mt-1 block text-sm leading-relaxed text-muted">{t.summary}</span>
+                                    </span>
+                                    <ArrowRight
+                                      size={15}
+                                      aria-hidden="true"
+                                      className="mt-1 shrink-0 text-subtle transition-transform group-hover:translate-x-0.5 group-hover:text-fg"
+                                    />
+                                  </button>
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        </>
+                      ) : (
+                        <>
+                          <p className="mb-3 font-mono text-[11px] text-subtle">events ({e.highlights.length})</p>
+                          <ol className="relative space-y-3 border-l border-line pl-5">
+                            {e.highlights.map((h, i) => (
+                              <m.li
+                                key={i}
+                                initial={reduce ? false : { opacity: 0, x: -6 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: 0.03 * i }}
+                                className="relative text-[15px] leading-relaxed text-muted"
+                              >
+                                <span
+                                  aria-hidden="true"
+                                  className="absolute top-2 -left-[25px] h-2.5 w-2.5 rounded-full border-2 border-bg-2 bg-gradient-to-br from-accent to-accent-2"
+                                />
+                                {h}
+                              </m.li>
+                            ))}
+                          </ol>
+                        </>
+                      )}
                     </div>
                   </div>
                 )}
